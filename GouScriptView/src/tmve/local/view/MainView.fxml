@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
@@ -23,8 +24,8 @@
                <content>
                   <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="183.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="377.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -48,13 +49,19 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
-                              <TextField fx:id="textOpenFile" editable="false" promptText="XML (GXPORT).gz" />
-                              <Button fx:id="fileOpen" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onFileOpen" text="ABRIR" />
+                              <TextField fx:id="textOpenFile" editable="false" prefHeight="31.0" prefWidth="314.0" promptText="XML (GXPORT).gz" />
+                              <Button fx:id="fileOpen" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onFileOpen" text="OPEN" />
                            </children>
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                         </HBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Label prefHeight="12.0" prefWidth="377.0" text="*Nota: La Base de datos se creará en una carpeta" textFill="#2738ab" />
+                              <Label prefHeight="12.0" prefWidth="377.0" text=" denominada /database en la ruta del ejecutable" textFill="#2738ab" />
+                           </children>
+                        </VBox>
                      </children>
                      <padding>
                         <Insets bottom="25.0" left="5.0" right="25.0" top="25.0" />
@@ -65,8 +72,8 @@
                <content>
                   <GridPane hgap="10.0" vgap="10.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="278.0" minWidth="10.0" prefWidth="179.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="10.0" prefWidth="386.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -76,8 +83,11 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <padding>
-                        <Insets bottom="25.0" right="25.0" top="25.0" />
+                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </padding>
+                     <children>
+                        <Label text="Label" />
+                     </children>
                   </GridPane>
                </content></Tab>
         </tabs>
@@ -104,4 +114,11 @@
         </menus>
       </MenuBar>
    </top>
+   <bottom>
+      <VBox prefHeight="28.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="601.0" text="Derechos reservados - Telefónica Venezuela" textAlignment="CENTER" />
+         </children>
+      </VBox>
+   </bottom>
 </BorderPane>

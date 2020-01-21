@@ -15,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tmve.local.main.GouScript;
@@ -56,17 +58,18 @@ public class MainController extends BaseController implements Initializable {
     
     @FXML
     void onFileOpen(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("ENTER GEXPORT");
+        DirectoryChooser direcotryChooser = new DirectoryChooser();
+        direcotryChooser.setTitle("Import GXPORT Data Base");
         Stage stage = (Stage)labelGxportInput.getScene().getWindow();
-        File file = fileChooser.showOpenDialog(stage);
-        
-        textOpenFile.setText(file.getAbsolutePath());
+        File file = direcotryChooser.showDialog(stage);
+        if(file!=null)
+            textOpenFile.setText(file.getAbsolutePath());
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
     }    
     
 }
