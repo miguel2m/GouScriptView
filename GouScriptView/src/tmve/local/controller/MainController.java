@@ -117,9 +117,20 @@ public class MainController extends BaseController implements Initializable {
                     if (!extractDirectory.exists())
                         extractDirectory.mkdir();                   
                 }               
-                
+                UnGzip ungz = new UnGzip(textOpenFile.getText(),outputDirectory+File.separator+"extract");
+
+                        ungz.start();
+
+                        ungz.setOnSucceeded(e -> {
+
+                            System.out.println(textOpenFile.getText() + " DONE");
+
+                            // TODO, . . . 
+                            // You can modify any GUI element from here...
+                            // ...with the values you got from the service
+                        });
                 //get all the files from a directory
-                File[] fList = inputDirectory.listFiles();
+                /*File[] fList = inputDirectory.listFiles();
                 
                 for (File f : fList) {
                     String ext = FilenameUtils.getExtension(f.getName());
@@ -141,7 +152,7 @@ public class MainController extends BaseController implements Initializable {
                         });
                                            
                     }
-                }
+                }*/
             }
         }
          

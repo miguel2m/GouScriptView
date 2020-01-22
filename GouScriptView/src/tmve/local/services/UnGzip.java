@@ -64,14 +64,16 @@ public class UnGzip extends Service{
    } 
     
     public void unGz() {
-        try{
+        try{ //Este es el script 7z e -o../ *.gz -aos
                 int value = new ProcessExecutor().command(
                         "."+File.separator+"lib"+File.separator+"7z.exe",
                         "x",
+                        
                         INPUT_GZIP_FILE,
-                        "-so",
-                        ">",
-                        OUTPUT_FILE+File.separator+FilenameUtils.getBaseName(INPUT_GZIP_FILE)
+                        "-o"+OUTPUT_FILE,
+                        "-aos"
+                        /*+File.separator+FilenameUtils.getBaseName(INPUT_GZIP_FILE)*/
+                       
                 )
                         .readOutput(true)
                         .redirectOutput(new LogOutputStream() {
