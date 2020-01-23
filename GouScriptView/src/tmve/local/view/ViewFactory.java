@@ -6,15 +6,20 @@
 package tmve.local.view;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tmve.local.controller.BaseController;
 import tmve.local.controller.HelpController;
 import tmve.local.controller.MainController;
 import tmve.local.main.GouScript;
+import tmve.local.services.GexportParser;
 
 /**
  *
@@ -32,8 +37,9 @@ public class ViewFactory {
     
     public void showMainWindown(){
         //System.out.println("MAIN WINDOWNS");
-        BaseController controller = new MainController(gouScript, this, "MainView.fxml");
+        MainController controller = new MainController(gouScript, this, "MainView.fxml");
         initializateStage(controller);
+        
     }
     
     public void showHelpWindown(){
@@ -59,6 +65,17 @@ public class ViewFactory {
         stage.getIcons().add(new Image(ViewFactory.class.getResourceAsStream("assets/tower.png")));
         stage.show();
     
+    }
+    
+    
+    public void addTab(Tab tab, String view){
+        FXMLLoader loader = new FXMLLoader();
+        try {
+            AnchorPane anch1 = loader.load(getClass().getResource(view));
+            tab.setContent(anch1);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void closeStage(Stage stageToClose){

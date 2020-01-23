@@ -34,41 +34,6 @@ public class UnGzip extends Service{
         this.logGexportIndicator = logGexportIndicator;
     }
     
-   
-    
-    
-    
-    
-    /**
-     * GunZip it
-     */
-    public void gunzipIt(){
- 
-     byte[] buffer = new byte[2048];
- 
-     try{
- 
-    	 GZIPInputStream gzis = 
-    		new GZIPInputStream(new FileInputStream(INPUT_GZIP_FILE));
- 
-    	 FileOutputStream out = 
-            new FileOutputStream(OUTPUT_FILE+"/"+FilenameUtils.getBaseName(INPUT_GZIP_FILE));
- 
-        int len;
-        while ((len = gzis.read(buffer)) > 0) {
-        	out.write(buffer, 0, len);
-        }
- 
-        gzis.close();
-    	out.close();
- 
-    	System.out.println("Done");
-    	
-    }catch(IOException ex){
-       ex.printStackTrace();   
-    }
-   } 
-    
     public void unGz() {
         try{ //Este es el script 7z e -o../ *.gz -aos
                /* int value =*/ new ProcessExecutor().command(
