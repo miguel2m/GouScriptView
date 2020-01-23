@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -33,7 +34,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label fx:id="labelGxportInput" contentDisplay="CENTER" text="Ingresar carpeta GXPORT ">
                                  <opaqueInsets>
@@ -42,10 +43,31 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <Button fx:id="gxportButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGxportDataBase" text="CREAR" />
+                              <ProgressIndicator fx:id="progressGexportDb" prefHeight="57.0" prefWidth="67.0" visible="false">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </ProgressIndicator>
+                              <VBox prefHeight="79.0" prefWidth="299.0">
+                                 <children>
+                                    <Label fx:id="progresTaskIndicator" prefHeight="43.0" prefWidth="298.0" textFill="#0e792a" visible="false">
+                                       <padding>
+                                          <Insets bottom="25.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="logGexportIndicator" prefHeight="36.0" prefWidth="298.0" textFill="#0f2566">
+                                       <padding>
+                                          <Insets left="5.0" right="5.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </VBox>
                            </children>
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
@@ -60,6 +82,16 @@
                            <children>
                               <Label prefHeight="12.0" prefWidth="377.0" text="*Nota: La Base de datos se creará en una carpeta" textFill="#2738ab" />
                               <Label prefHeight="12.0" prefWidth="377.0" text=" denominada /database en la ruta del ejecutable" textFill="#2738ab" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                           <children>
+                              <Button fx:id="gxportButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onGxportDataBase" text="CREAR">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="cancelTask" mnemonicParsing="false" onAction="#onCancelTask" text="CANCELAR" textFill="#d00d0d" visible="false" />
                            </children>
                         </VBox>
                      </children>

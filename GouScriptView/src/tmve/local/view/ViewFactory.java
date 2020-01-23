@@ -9,6 +9,7 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import tmve.local.controller.BaseController;
 import tmve.local.controller.HelpController;
@@ -30,7 +31,7 @@ public class ViewFactory {
     
     
     public void showMainWindown(){
-        System.out.println("MAIN WINDOWNS");
+        //System.out.println("MAIN WINDOWNS");
         BaseController controller = new MainController(gouScript, this, "MainView.fxml");
         initializateStage(controller);
     }
@@ -54,7 +55,8 @@ public class ViewFactory {
         Scene scene = new Scene(parent);
         Stage  stage = new Stage();
         stage.setScene(scene);
-        stage.setTitle(controller.getFxmlName());
+        stage.setTitle("Avila RAN v2.0");
+        stage.getIcons().add(new Image(ViewFactory.class.getResourceAsStream("assets/tower.png")));
         stage.show();
     
     }

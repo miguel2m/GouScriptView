@@ -6,87 +6,56 @@
 package tmve.local.services;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.zip.GZIPInputStream;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
-import org.apache.commons.io.FilenameUtils;
 import org.zeroturnaround.exec.ProcessExecutor;
 import org.zeroturnaround.exec.stream.LogOutputStream;
 
 /**
  *
- * @author P05144
+ * @author Miguelangel
  */
-public class UnGzip extends Service{
+public class GexportParser extends Service{
 
-    private String INPUT_GZIP_FILE;
-    private String OUTPUT_FILE;
+    private String INPUT_FOLDER;
+    private String OUT_FOLDER;
     private Label logGexportIndicator;
 
-    public UnGzip(String INPUT_GZIP_FILE, String OUTPUT_FILE, Label logGexportIndicator) {
-        this.INPUT_GZIP_FILE = INPUT_GZIP_FILE;
-        this.OUTPUT_FILE = OUTPUT_FILE;
+    public GexportParser(String INPUT_FOLDER, String OUT_FOLDER, Label logGexportIndicator) {
+        this.INPUT_FOLDER = INPUT_FOLDER;
+        this.OUT_FOLDER = OUT_FOLDER;
         this.logGexportIndicator = logGexportIndicator;
     }
     
-   
     
     
-    
-    
-    /**
-     * GunZip it
-     */
-    public void gunzipIt(){
- 
-     byte[] buffer = new byte[2048];
- 
-     try{
- 
-    	 GZIPInputStream gzis = 
-    		new GZIPInputStream(new FileInputStream(INPUT_GZIP_FILE));
- 
-    	 FileOutputStream out = 
-            new FileOutputStream(OUTPUT_FILE+"/"+FilenameUtils.getBaseName(INPUT_GZIP_FILE));
- 
-        int len;
-        while ((len = gzis.read(buffer)) > 0) {
-        	out.write(buffer, 0, len);
-        }
- 
-        gzis.close();
-    	out.close();
- 
-    	System.out.println("Done");
-    	
-    }catch(IOException ex){
-       ex.printStackTrace();   
-    }
-   } 
-    
-    public void unGz() {
+    public void gxportParser() {
         try{ //Este es el script 7z e -o../ *.gz -aos
                /* int value =*/ new ProcessExecutor().command(
-                    "." + File.separator + "lib" + File.separator + "7z.exe",
-                    "x",
-                    INPUT_GZIP_FILE + File.separator + "*.gz",
-                    "-o" + OUTPUT_FILE,
-                    "-aos"
+                    "java", "-Xms128m", "-Xmx256m", "-Djava.awt.headless=true", "-jar",
+                    "." + File.separator + "lib" + File.separator + "boda-huaweicmobjectparser.jar",
+                    "-i",
+                    INPUT_FOLDER,
+                    "-o",
+                    OUT_FOLDER
             /*+File.separator+FilenameUtils.getBaseName(INPUT_GZIP_FILE)*/
             )
                     .readOutput(true)
                     .redirectOutput(new LogOutputStream() {
                         @Override
                         protected void processLine(String line) {
+                            //text=line;
+                            // Update UI here.
                             Platform.runLater(() -> {
 
                                 logGexportIndicator.setText(line);
                             });
+
+                            //label=line;
+                            //System.out.println(" "+line);
+                            //System.out.println(" "+line);
                         }
                     })
                     .destroyOnExit()
@@ -99,14 +68,13 @@ public class UnGzip extends Service{
             System.out.println(" "+e.getMessage());
         }
     }
-    
     @Override
     protected Task createTask() {
          return new Task() {
             @Override
             protected Void call() throws Exception {
-                if(!isCancelled())
-                unGz();
+                if(! isCancelled())
+                gxportParser();
                 //gunzipIt();
                 return null;
             }

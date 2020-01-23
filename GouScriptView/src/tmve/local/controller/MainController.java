@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
@@ -28,6 +29,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FilenameUtils;
 import tmve.local.main.GouScript;
+import tmve.local.services.GexportParser;
 import tmve.local.services.UnGzip;
 import tmve.local.view.ViewFactory;
 
@@ -38,6 +40,8 @@ import tmve.local.view.ViewFactory;
 public class MainController extends BaseController implements Initializable {
     private  File inputDirectory;
     private String outputDirectory ="."+File.separator+"database";
+    private UnGzip ungz;
+    private GexportParser gexportParser;
     /**
      * Constructor de la clase principal
      * @param gouScript
@@ -73,6 +77,26 @@ public class MainController extends BaseController implements Initializable {
      */
     @FXML
     private Button fileOpen;
+    /**
+     * Atributo para cancelar la tarea de importacion
+     */
+    @FXML
+    private Button cancelTask;
+    /**
+     * Atributo para mostrar el progreso de las tareas
+     */
+    @FXML
+    private ProgressIndicator progressGexportDb;
+    /**
+     * Atributo para mostrar el log de la tarea Importar Data Base
+     */
+    @FXML
+    private Label logGexportIndicator;
+    /**
+     * Atributo para mostrar el estado para importar la base de datos
+     */
+    @FXML
+    private Label progresTaskIndicator;
     
     
     /**
@@ -105,11 +129,24 @@ public class MainController extends BaseController implements Initializable {
      */
      @FXML
     void onGxportDataBase(ActionEvent event) {
-        if(!textOpenFile.getText().equals(null)){
-            gxportButton.setDisable(true);
+        if(!textOpenFile.getText().equals(null) &&
+                !textOpenFile.getText().isEmpty()){
+            
+            
+            
             //Is path is readable
             Path file = Paths.get(textOpenFile.getText());
             if(Files.isReadable(file)){
+                Platform.runLater(() -> {
+                            
+                    gxportButton.setVisible(false);
+                    cancelTask.setVisible(true);
+                    progressGexportDb.setVisible(true);
+                    logGexportIndicator.setVisible(true);
+                    progresTaskIndicator.setVisible(true);
+                });
+                
+                
                 File directory = new File(outputDirectory);
                 if (!directory.exists()){
                     directory.mkdir();
@@ -117,49 +154,40 @@ public class MainController extends BaseController implements Initializable {
                     if (!extractDirectory.exists())
                         extractDirectory.mkdir();                   
                 }               
-                UnGzip ungz = new UnGzip(textOpenFile.getText(),outputDirectory+File.separator+"extract");
+                ungz = new UnGzip(textOpenFile.getText(),outputDirectory+File.separator+"extract",logGexportIndicator);
 
                         ungz.start();
-
-                        ungz.setOnSucceeded(e -> {
-
-                            System.out.println(textOpenFile.getText() + " DONE");
-
-                            // TODO, . . . 
-                            // You can modify any GUI element from here...
-                            // ...with the values you got from the service
+                        ungz.setOnRunning(a -> {
+                            progresTaskIndicator.setText("Descomprimiendo");
                         });
-                //get all the files from a directory
-                /*File[] fList = inputDirectory.listFiles();
-                
-                for (File f : fList) {
-                    String ext = FilenameUtils.getExtension(f.getName());
-                    
-                    if (ext.equals("gz")) {
-                        //UnGzip.gunzipIt(f.getAbsolutePath(),outputDirectory+"/extract");gxportButton
+                        ungz.setOnSucceeded(b -> {
+                            //System.out.println(textOpenFile.getText() + " DONE");
+                            //gxportButton.setDisable(false);
 
-                        UnGzip ungz = new UnGzip(f.getAbsolutePath(),outputDirectory+File.separator+"extract");
+                            gexportParser =new GexportParser(outputDirectory+File.separator+"extract",outputDirectory,logGexportIndicator);
+                            gexportParser.start();
+                            //progressGexportDb.visibleProperty().bind(gexportParser.runningProperty());
+                            gexportParser.setOnRunning(c -> {
+                                progresTaskIndicator.setText("Convirtiendo XML a CSV");
+                            });
+                            gexportParser.setOnSucceeded(d-> {
+                                Platform.runLater(() -> {
 
-                        ungz.start();
-
-                        ungz.setOnSucceeded(e -> {
-
-                            System.out.println(f.getAbsolutePath() + " DONE");
-
-                            // TODO, . . . 
-                            // You can modify any GUI element from here...
-                            // ...with the values you got from the service
+                                    gxportButton.setVisible(true);
+                                    cancelTask.setVisible(false);
+                                    progressGexportDb.setVisible(false);
+                                    progresTaskIndicator.setVisible(false);
+                                    //logGexportIndicator.setVisible(false);
+                                });
+                            });
                         });
-                                           
-                    }
-                }*/
             }
         }
          
     }
     
     /**
-     * Metodo paa cerrar el programa
+     * Metodo para cerrar el programa
      * @param event 
      */
     @FXML
@@ -169,6 +197,27 @@ public class MainController extends BaseController implements Initializable {
        
         
     }
+    /**
+     * Metodo para cancelar las tareas de importar base de datos
+     * @param event 
+     */
+    @FXML
+    void onCancelTask(ActionEvent event) {
+        Platform.runLater(() -> {
+
+                                    gxportButton.setVisible(true);
+                                    cancelTask.setVisible(false);
+                                    progressGexportDb.setVisible(false);
+                                    progresTaskIndicator.setVisible(false);
+                                    //logGexportIndicator.setVisible(false);
+                                });
+        if(ungz != null)
+                ungz.cancel();
+                
+        if(gexportParser !=null)
+            gexportParser.cancel();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
