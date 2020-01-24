@@ -103,6 +103,7 @@ public class MainController extends BaseController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         viewFactory.addTab(gxportDbTab, "GxportDBView.fxml");
         viewFactory.addTab(gouScriptTab, "GouScriptView.fxml");
+        
     }    
     
 }

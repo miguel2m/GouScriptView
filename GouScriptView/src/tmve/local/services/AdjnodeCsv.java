@@ -6,93 +6,91 @@
 package tmve.local.services;
 
 
-import com.opencsv.bean.BeanVerifier;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.HeaderColumnNameMappingStrategy;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import org.zeroturnaround.exec.ProcessExecutor;
+import org.zeroturnaround.exec.stream.LogOutputStream;
 import tmve.local.controller.MainController;
-import tmve.local.model.AdjNode;
 
 /**
  *
  * @author P05144
  */
-public class AdjnodeCsv extends Service<List<AdjNode>>{
+public class AdjnodeCsv extends Service<List<String>>{
     private String _rnc;
+    private boolean node;
 
-
-    public AdjnodeCsv(String _rnc) {
+    public AdjnodeCsv(String _rnc, boolean node) {
         this._rnc = _rnc;
-
+        this.node = node;
     }
+ 
     
+ 
     
-    
-    public List<AdjNode> getAdjNode()throws IOException{
-        
-        Path myPath = Paths.get(MainController.outputDirectory+File.separator+"ADJNODE.csv");
-        List <AdjNode> aniNodes;
-        try (BufferedReader br = Files.newBufferedReader(myPath,
-                StandardCharsets.UTF_8)) {
+    public List<String> getAdjNode() {
+        List<String> _rncList = new ArrayList<>();
+        try{ //Este es el script 7z e -o../ *.gz -aos
+            
+                List<String> commands = new ArrayList<>();
+                    commands.add("java");
+                    commands.add("-Xms128m");
+                    commands.add("-Xmx256m");
+                    commands.add("-Djava.awt.headless=true");
+                    commands.add("-jar");
+                    commands.add("." + File.separator + "lib" + File.separator + "ReadGxportCsvDB.jar");
+                    commands.add("-db");
+                    commands.add(MainController.outputDirectory+File.separator);
+                    commands.add("-rnc");
+                    commands.add(_rnc);
+                if (node)   commands.add("-n");
+               /* int value =*/ new ProcessExecutor(commands)/*.command(
+                    "java", "-Xms128m", "-Xmx256m", "-Djava.awt.headless=true", "-jar",
+                    "." + File.separator + "lib" + File.separator + "ReadGxportCsvDB.jar",
+                    "-db",
+                    MainController.outputDirectory+File.separator,
+                    "-rnc",
+                    _rnc
+            /*+File.separator+FilenameUtils.getBaseName(INPUT_GZIP_FILE)*/
+            /*)*/
+                    .readOutput(true)
+                    .redirectOutput(new LogOutputStream() {
+                        @Override
+                        protected void processLine(String line) {
+                            //text=line;
+                            // Update UI here.
 
-            HeaderColumnNameMappingStrategy<AdjNode> strategy
-                    = new HeaderColumnNameMappingStrategy<>();
-            strategy.setType(AdjNode.class);
-            BeanVerifier beanVerifier = (BeanVerifier) (Object t) -> {
-                AdjNode node  = (AdjNode)t;
-                return (node.getFilename().contains(_rnc)); //To change body of generated lambdas, choose Tools | Templates.
-            };
-            
-            CsvToBean csvToBean = new CsvToBeanBuilder(br)
-                    .withType(AdjNode.class)
-                    .withMappingStrategy(strategy)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .withVerifier(beanVerifier)
-                    .build();
-            
-            aniNodes= (List<AdjNode>)csvToBean.parse();/*(List<AdjNode>)csvToBean.parse()
-                                                .stream()
-                                                .collect(
-                                                     collectingAndThen(
-                                                             toCollection(() -> 
-                                                                     new TreeSet<>(comparing(AdjNode::getFilename)))
-                                                             ,ArrayList::new)
-                                             );*/
-            
-            
-
-
-            
+                            _rncList.add(line);
+                            //label=line;
+                            //System.out.println(" "+line);
+                            //System.out.println(" "+line);
+                        }
+                    })
+                    .destroyOnExit()
+                    .execute();
+                        /*.getExitValue();
+                if (value == 0) {
+                    System.out.println("Done");
+                }*/
+        }catch(Exception e){
+            System.out.println(" "+e.getMessage());
         }
-        
-        return aniNodes;
-        
+        return _rncList;
     }
     
     @Override
-    protected Task<List<AdjNode>> createTask() {
-        return new  Task<List<AdjNode>>() {
+    protected Task<List<String>> createTask() {
+        return new  Task<List<String>>() {
             @Override
             protected List call()  {
-                try {
+              
                 
                     return getAdjNode();
-                } catch (IOException ex) {
-                    Logger.getLogger(AdjnodeCsv.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                return null;
+                
+               
             }
 
             

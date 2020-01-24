@@ -7,28 +7,16 @@ package tmve.local.controller;
 
 
 import java.net.URL;
-import java.util.ArrayList;
-import static java.util.Comparator.comparing;
 import java.util.ResourceBundle;
-import java.util.TreeSet;
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toCollection;
-import javafx.application.ConditionalFeature;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
+import org.apache.commons.collections4.CollectionUtils;
 import org.controlsfx.control.textfield.TextFields;
-import tmve.local.model.AdjNode;
 import tmve.local.services.AdjnodeCsv;
 
 /**
@@ -51,26 +39,28 @@ public class GouScriptViewController implements Initializable {
             
             rncSearchName.append(event.getCharacter());
            System.out.println(""+rncSearchName);
-           if(rncSearchName.length()> 2){
+           if(rncSearchName.length()==3){
             
-            AdjnodeCsv adjnodeCsv = new AdjnodeCsv(rncSearchName.toString());
+            AdjnodeCsv adjnodeCsv = new AdjnodeCsv(rncSearchName.toString(),false);
             
             adjnodeCsv.start();
             
             adjnodeCsv.setOnSucceeded(d-> {
-              
-                /*adjnodeCsv.getValue().stream()
-                                                .collect(
-                                                     collectingAndThen(
-                                                             toCollection(() -> 
-                                                                     new TreeSet<>(comparing(AdjNode::getFilename)))
-                                                             ,ArrayList::new)
-                                                );
-                adjnodeCsv.getValue().forEach(System.out::println);*/
-                System.out.println("VALUE "+adjnodeCsv.getValue());       
+                rncPossibleSuggestions.clear();
+               
+                if(!CollectionUtils.isEmpty( adjnodeCsv.getValue())){
+                    adjnodeCsv.getValue().forEach((t) -> {
+                        
+                        rncPossibleSuggestions.add(t);
+                    });
+                }
+               // System.out.println("VALUE "+adjnodeCsv.getValue());  
+               TextFields.bindAutoCompletion(searchRnc,rncPossibleSuggestions);
             });
-            //TextFields.bindAutoCompletion(searchRnc,"test","temp","tempurature","table","tablet");
+            
            }
+           //rncPossibleSuggestions.forEach(System.out::println);
+           
     }
    
     @FXML
@@ -92,6 +82,7 @@ public class GouScriptViewController implements Initializable {
                 return elem.toLowerCase().startsWith(t.getUserText().toLowerCase());
             }).collect(Collectors.toList());
         });*/
+        
     }    
     
 }
