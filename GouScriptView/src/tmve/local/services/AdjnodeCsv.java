@@ -5,6 +5,7 @@
  */
 package tmve.local.services;
 
+
 import com.opencsv.bean.BeanVerifier;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -17,6 +18,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import tmve.local.controller.MainController;
@@ -59,10 +62,21 @@ public class AdjnodeCsv extends Service<List<AdjNode>>{
                     .withVerifier(beanVerifier)
                     .build();
             
-            aniNodes= csvToBean.parse();
+            aniNodes= (List<AdjNode>)csvToBean.parse();/*(List<AdjNode>)csvToBean.parse()
+                                                .stream()
+                                                .collect(
+                                                     collectingAndThen(
+                                                             toCollection(() -> 
+                                                                     new TreeSet<>(comparing(AdjNode::getFilename)))
+                                                             ,ArrayList::new)
+                                             );*/
+            
+            
+
 
             
         }
+        
         return aniNodes;
         
     }
@@ -71,9 +85,17 @@ public class AdjnodeCsv extends Service<List<AdjNode>>{
     protected Task<List<AdjNode>> createTask() {
         return new  Task<List<AdjNode>>() {
             @Override
-            protected List call() throws Exception {
-                return getAdjNode();
+            protected List call()  {
+                try {
+                
+                    return getAdjNode();
+                } catch (IOException ex) {
+                    Logger.getLogger(AdjnodeCsv.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return null;
             }
+
+            
         
         };
     }
