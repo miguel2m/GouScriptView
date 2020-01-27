@@ -127,7 +127,7 @@
    <bottom>
       <VBox prefHeight="28.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="601.0" text="Derechos reservados - Telefónica Venezuela" textAlignment="CENTER" />
+            <Label fx:id="labelFooter" alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="601.0" text="Derechos reservados - Telefónica Venezuela" textAlignment="CENTER" />
          </children>
       </VBox>
    </bottom>

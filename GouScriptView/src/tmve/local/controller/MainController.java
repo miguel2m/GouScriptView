@@ -12,35 +12,18 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.apache.commons.io.FilenameUtils;
 import tmve.local.main.GouScript;
-import tmve.local.services.GexportParser;
-import tmve.local.services.UnGzip;
 import tmve.local.view.ViewFactory;
 
 /**
@@ -54,7 +37,8 @@ public class MainController extends BaseController implements Initializable {
     private Tab gxportDbTab;
     @FXML
     private Tab gouScriptTab;
-
+    @FXML
+     Label labelFooter;
     /**
      * Constructor de la clase principal
      * @param gouScript
@@ -114,7 +98,8 @@ public class MainController extends BaseController implements Initializable {
                     // refreshTabBData();
                     //System.out.println("gouScriptTab ");
                     Path file = Paths.get(outputDirectory+File.separator+"ADJNODE.csv");
-                    if (Files.isReadable(file)) {
+                    Path file2 = Paths.get(outputDirectory+File.separator+"IPRT.csv");
+                    if (Files.isReadable(file) && Files.isReadable(file2)) {
                         Platform.runLater(() -> {
                         viewFactory.addTab(gouScriptTab, "GouScriptView.fxml");
                     
@@ -122,13 +107,14 @@ public class MainController extends BaseController implements Initializable {
                     }else{
                         Alert alert = new Alert(AlertType.ERROR,
                                 "La base no fue cargada completamente, "
-                                + "falta la tabla ADJNODE.csv ");
+                                + "falta la tabla ADJNODE.csv o IPRT.csv ");
                         
                         alert.setTitle("Error en la base de datos");
                         alert.showAndWait();
                        
                         //Optional<ButtonType> result = alert.showAndWait();
                     }
+                    
                     
                 }
             });
