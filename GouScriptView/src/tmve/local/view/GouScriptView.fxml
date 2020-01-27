@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -45,7 +46,6 @@
             <Label text="SN" GridPane.rowIndex="3" />
             <Label text="PORT" GridPane.rowIndex="4" />
             <Label text="VRF" GridPane.rowIndex="5" />
-            <Button fx:id="crearGouScript" mnemonicParsing="false" onAction="#onCrearGouScript" text="CREAR" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <SearchableComboBox fx:id="searchComboboxSRN" prefHeight="31.0" prefWidth="112.0" />
@@ -70,6 +70,13 @@
                   <Button fx:id="cargarVRF" mnemonicParsing="false" onAction="#onCargarVRF" text="Cargar" />
                </children>
             </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <children>
+                  <Button fx:id="crearGouScript" mnemonicParsing="false" onAction="#onCrearGouScript" text="CREAR" />
+                  <ProgressIndicator fx:id="gouScriptProgress" />
+               </children>
+            </HBox>
+            <Label fx:id="progressIndicator" GridPane.rowIndex="6" />
          </children>
          <padding>
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
