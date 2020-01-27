@@ -188,7 +188,8 @@ public class GouScriptViewController implements Initializable {
 
             alert.setTitle("Seleccione la RNC");
             alert.showAndWait();
-            
+            crearGouScript.setVisible(true);
+            gouScriptProgress.setVisible(false);
         } else {
             if (nodebList.getCheckModel().getCheckedItems().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -196,6 +197,8 @@ public class GouScriptViewController implements Initializable {
 
                 alert.setTitle("Seleccione la lista de NODB");
                 alert.showAndWait();
+                crearGouScript.setVisible(true);
+                gouScriptProgress.setVisible(false);
             } else {
                 if (searchComboboxSRN.selectionModelProperty().getValue().isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -203,6 +206,8 @@ public class GouScriptViewController implements Initializable {
 
                     alert.setTitle("Seleccione el SRN ");
                     alert.showAndWait();
+                    crearGouScript.setVisible(true);
+                    gouScriptProgress.setVisible(false);
                 } else {
                     if (searchComboboxSN.selectionModelProperty().getValue().isEmpty()) {
                         Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -210,6 +215,8 @@ public class GouScriptViewController implements Initializable {
 
                         alert.setTitle("Seleccione el SN ");
                         alert.showAndWait();
+                        crearGouScript.setVisible(true);
+                        gouScriptProgress.setVisible(false);
                     } else {
                         if (searchComboboxPORT.selectionModelProperty().getValue().isEmpty()) {
                             Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -217,6 +224,8 @@ public class GouScriptViewController implements Initializable {
 
                             alert.setTitle("Seleccione el Puerto ");
                             alert.showAndWait();
+                            crearGouScript.setVisible(true);
+                            gouScriptProgress.setVisible(false);
                         } else {
                             if (searchComboboxVRF.selectionModelProperty().getValue().isEmpty()) {
                                 Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -224,6 +233,8 @@ public class GouScriptViewController implements Initializable {
 
                                 alert.setTitle("Seleccione la VRF IP  ");
                                 alert.showAndWait();
+                                crearGouScript.setVisible(true);
+                                gouScriptProgress.setVisible(false);
                             } else {
                                 GouScript gouScript = new GouScript(searchComboboxRNC.getValue(),
                                         Short.parseShort(searchComboboxSRN.getValue()),
@@ -235,8 +246,10 @@ public class GouScriptViewController implements Initializable {
 
                                 gouScript.start();
                                 gouScript.setOnSucceeded((e) -> {
-                                    gouScriptProgress.setProgress(gouScript.getValue());
+                                    gouScriptProgress.setVisible(false);
+                                    //gouScriptProgress.setProgress(100);
                                     System.out.println("Termino con " + gouScript.getValue());
+                                    crearGouScript.setVisible(true);
                                     //crearGouScript.setVisible(true);
 
                                 });
@@ -245,10 +258,10 @@ public class GouScriptViewController implements Initializable {
                     }
                 }
             }
-
+            
         }
-        gouScriptProgress.setVisible(false);
-        crearGouScript.setVisible(true);
+        //gouScriptProgress.setVisible(false);
+        //crearGouScript.setVisible(true);
        
        
        //validationSupport.setErrorDecorationEnabled(true);
