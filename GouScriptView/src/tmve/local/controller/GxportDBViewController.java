@@ -6,6 +6,7 @@
 package tmve.local.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,6 +22,10 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.apache.commons.io.FileUtils;
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.GlyphFont;
+import org.controlsfx.glyphfont.GlyphFontRegistry;
 import tmve.local.services.GexportParser;
 import tmve.local.services.UnGzip;
 
@@ -95,7 +100,7 @@ public class GxportDBViewController implements Initializable {
      * @param event 
      */
     @FXML
-    void onGxportDataBase(ActionEvent event) {
+    void onGxportDataBase(ActionEvent event) throws IOException {
         
         if(!textOpenFile.getText().equals(null) &&
                 !textOpenFile.getText().isEmpty()){
@@ -113,14 +118,14 @@ public class GxportDBViewController implements Initializable {
                     progresTaskIndicator.setVisible(true);
                 });
                 
-                
+                FileUtils.deleteDirectory(new File(MainController.outputDirectory));
                 File directory = new File(MainController.outputDirectory);
-                if (!directory.exists()){
+                //if (!directory.exists()){
                     directory.mkdir();
                     File extractDirectory = new File(MainController.outputDirectory+File.separator+"extract");
                     if (!extractDirectory.exists())
                         extractDirectory.mkdir();                   
-                }               
+                //}               
                 ungz = new UnGzip(textOpenFile.getText(),MainController.outputDirectory+File.separator+"extract",logGexportIndicator);
 
                         ungz.start();
@@ -142,7 +147,8 @@ public class GxportDBViewController implements Initializable {
 
                                     gxportButton.setVisible(true);
                                     cancelTask.setVisible(false);
-                                    progressGexportDb.setVisible(false);
+                                    progressGexportDb.setProgress(100);
+                                    //progressGexportDb.setVisible(false);
                                     progresTaskIndicator.setVisible(false);                                   
                                     //logGexportIndicator.setVisible(false);
                                 });
@@ -176,12 +182,15 @@ public class GxportDBViewController implements Initializable {
         if(gexportParser !=null)
             gexportParser.cancel();
     }
+    GlyphFont glyphFont = GlyphFontRegistry.font("FontAwesome");
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        fileOpen.setGraphic(glyphFont.create(FontAwesome.Glyph.FILES_ALT));
+        //gxportButton.setGraphic(glyphFont.create(FontAwesome.Glyph.UPLOAD));
     }    
     
 }

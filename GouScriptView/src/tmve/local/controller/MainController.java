@@ -20,9 +20,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -97,12 +100,38 @@ public class MainController extends BaseController implements Initializable {
        
         
     }
-
+    
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        viewFactory.addTab(gxportDbTab, "GxportDBView.fxml");
-        viewFactory.addTab(gouScriptTab, "GouScriptView.fxml");
+      
+            //viewFactory.addTab(gxportDbTab, "GxportDBView.fxml");
+            
+            
+            gouScriptTab.setOnSelectionChanged((event) -> {
+                if (gouScriptTab.isSelected()) {
+                    // refreshTabBData();
+                    //System.out.println("gouScriptTab ");
+                    Path file = Paths.get(outputDirectory+File.separator+"ADJNODE.csv");
+                    if (Files.isReadable(file)) {
+                        Platform.runLater(() -> {
+                        viewFactory.addTab(gouScriptTab, "GouScriptView.fxml");
+                    
+                        });
+                    }else{
+                        Alert alert = new Alert(AlertType.ERROR,
+                                "La base no fue cargada completamente, "
+                                + "falta la tabla ADJNODE.csv ");
+                        
+                        alert.setTitle("Error en la base de datos");
+                        alert.showAndWait();
+                       
+                        //Optional<ButtonType> result = alert.showAndWait();
+                    }
+                    
+                }
+            });
         
     }    
     

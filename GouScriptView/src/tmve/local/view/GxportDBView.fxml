@@ -61,7 +61,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
                               <TextField fx:id="textOpenFile" editable="false" prefHeight="31.0" prefWidth="314.0" promptText="XML (GXPORT).gz" />
-                              <Button fx:id="fileOpen" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onFileOpen" text="OPEN" />
+                              <Button fx:id="fileOpen" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onFileOpen" />
                            </children>
                            <opaqueInsets>
                            
