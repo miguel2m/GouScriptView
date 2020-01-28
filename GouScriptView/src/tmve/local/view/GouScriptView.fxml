@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -42,9 +43,9 @@
                   <SearchableComboBox fx:id="searchComboboxRNC" onAction="#onSearchComboboxRNC" />
                </children>
             </HBox>
-            <Label text="SRN" GridPane.rowIndex="2" />
-            <Label text="SN" GridPane.rowIndex="3" />
-            <Label text="PORT" GridPane.rowIndex="4" />
+            <Label text="SRN (Destino)" GridPane.rowIndex="2" />
+            <Label text="SN (Destino)" GridPane.rowIndex="3" />
+            <Label text="PORT (Destino)" GridPane.rowIndex="4" />
             <Label text="VRF" GridPane.rowIndex="5" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
@@ -66,7 +67,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
-                  <SearchableComboBox fx:id="searchComboboxVRF" prefHeight="31.0" prefWidth="112.0" />
+                  <TextField fx:id="textFieldVRF" prefHeight="31.0" prefWidth="112.0" />
                   <Button fx:id="cargarVRF" mnemonicParsing="false" onAction="#onCargarVRF" text="Cargar" />
                </children>
             </HBox>

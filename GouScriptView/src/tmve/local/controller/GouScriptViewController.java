@@ -26,11 +26,13 @@ import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import tmve.local.services.AdjnodeCsv;
 import org.controlsfx.control.SearchableComboBox;
+import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.GlyphFont;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
+import tmve.local.model.ValidatorModel;
 import tmve.local.services.GouScript;
 import tmve.local.services.IprtCsv;
 /**
@@ -42,6 +44,7 @@ public class GouScriptViewController implements Initializable {
     
     //private StringBuffer rncSearchName = new StringBuffer("");
     private ObservableList<String> rncPossibleSuggestions = FXCollections.observableArrayList();
+    private ObservableList<String> vrfPossibleSuggestions = FXCollections.observableArrayList();
    // private ObservableList<String> nodebRnc = FXCollections.observableArrayList();
     private AutoCompletionBinding auto;
     @FXML
@@ -68,14 +71,13 @@ public class GouScriptViewController implements Initializable {
     @FXML
     private SearchableComboBox<String> searchComboboxPORT;
     @FXML
-    private SearchableComboBox<String> searchComboboxVRF;
-    @FXML
     public static GridPane gouScriptGridPanel;
     @FXML
     private ProgressIndicator gouScriptProgress;
     @FXML
     private Label progressIndicator;
-     
+    @FXML
+    private TextField textFieldVRF;
     private ValidationSupport validationSupport = new ValidationSupport();;
     /*@FXML
     private PrefixSelectionComboBox<String> prefixSeleccion = new PrefixSelectionComboBox<>();*/
@@ -83,7 +85,7 @@ public class GouScriptViewController implements Initializable {
     private PrefixSelectionChoiceBox<String> nodebList;*/
     @FXML
     private TextField searchRnc;
-    GlyphFont glyphFont = GlyphFontRegistry.font("FontAwesome");
+    private GlyphFont glyphFont = GlyphFontRegistry.font("FontAwesome");
     /*
     @FXML
     void onTextRncFieldKeyTyped(KeyEvent   event) {
@@ -153,7 +155,9 @@ public class GouScriptViewController implements Initializable {
         searchComboboxSRN.setDisable(true);
         searchComboboxSN.setDisable(true);
         searchComboboxPORT.setDisable(true);
-        searchComboboxVRF.setDisable(true);
+        textFieldVRF.setDisable(true);
+        
+       // searchComboboxVRF.setDisable(true);
         
         cargarSRN.setVisible(true);
         cargarSN.setVisible(true);
@@ -227,7 +231,7 @@ public class GouScriptViewController implements Initializable {
                             crearGouScript.setVisible(true);
                             gouScriptProgress.setVisible(false);
                         } else {
-                            if (searchComboboxVRF.selectionModelProperty().getValue().isEmpty()) {
+                            if (textFieldVRF.getText().isEmpty()) {
                                 Alert alert = new Alert(Alert.AlertType.ERROR,
                                         "Seleccione la VRF IP ");
 
@@ -236,23 +240,33 @@ public class GouScriptViewController implements Initializable {
                                 crearGouScript.setVisible(true);
                                 gouScriptProgress.setVisible(false);
                             } else {
-                                GouScript gouScript = new GouScript(searchComboboxRNC.getValue(),
-                                        Short.parseShort(searchComboboxSRN.getValue()),
-                                        Short.parseShort(searchComboboxSN.getValue()),
-                                        Short.parseShort(searchComboboxPORT.getValue()),
-                                        searchComboboxVRF.getValue(),
-                                        nodebList.getCheckModel().getCheckedItems(),
-                                        progressIndicator);
+                                if (!ValidatorModel.isValidIp(textFieldVRF.getText())) {
+                                    Alert alert = new Alert(Alert.AlertType.ERROR,
+                                            "Por favor ingrese una direccion de ip valida ");
 
-                                gouScript.start();
-                                gouScript.setOnSucceeded((e) -> {
-                                    gouScriptProgress.setVisible(false);
-                                    //gouScriptProgress.setProgress(100);
-                                    System.out.println("Termino con " + gouScript.getValue());
+                                    alert.setTitle("IP invalida  ");
+                                    alert.showAndWait();
                                     crearGouScript.setVisible(true);
-                                    //crearGouScript.setVisible(true);
+                                    gouScriptProgress.setVisible(false);
+                                } else {
+                                    GouScript gouScript = new GouScript(searchComboboxRNC.getValue(),
+                                            Short.parseShort(searchComboboxSRN.getValue()),
+                                            Short.parseShort(searchComboboxSN.getValue()),
+                                            Short.parseShort(searchComboboxPORT.getValue()),
+                                            textFieldVRF.getText(),
+                                            nodebList.getCheckModel().getCheckedItems(),
+                                            progressIndicator);
 
-                                });
+                                    gouScript.start();
+                                    gouScript.setOnSucceeded((e) -> {
+                                        gouScriptProgress.setVisible(false);
+                                        //gouScriptProgress.setProgress(100);
+                                        System.out.println("Termino con " + gouScript.getValue());
+                                        crearGouScript.setVisible(true);
+                                        //crearGouScript.setVisible(true);
+
+                                    });
+                                }
                             }
                         }
                     }
@@ -391,11 +405,14 @@ public class GouScriptViewController implements Initializable {
 
                 if (!CollectionUtils.isEmpty(iprtCsvVRF.getValue())) {
                     Platform.runLater(() -> {
-                        searchComboboxVRF.setDisable(false);
-                        if (!searchComboboxVRF.getItems().isEmpty()) {
+                        
+                        /*if (!textFieldVRF.getItems().isEmpty()) {
                             searchComboboxVRF.getItems().clear();
-                        }
-                        searchComboboxVRF.getItems().addAll(iprtCsvVRF.getValue());
+                        }*/
+                        //searchComboboxVRF.getItems().addAll(iprtCsvVRF.getValue());
+                        vrfPossibleSuggestions.addAll(iprtCsvVRF.getValue());
+                        TextFields.bindAutoCompletion(textFieldVRF, vrfPossibleSuggestions);
+                        textFieldVRF.setDisable(false);
                     });
                 }
                 cargarVRF.setVisible(false);
@@ -403,7 +420,7 @@ public class GouScriptViewController implements Initializable {
                 cargarVRF.setText("Cargar");
                 cargarVRF.setGraphic(null);
                 
-                searchComboboxVRF.setDisable(false);
+                textFieldVRF.setDisable(false);
 
                 //validationSupport.registerValidator(searchComboboxVRF, Validator.createEmptyValidator("Seleccione VRF IP"));
             });
@@ -426,7 +443,8 @@ public class GouScriptViewController implements Initializable {
                 searchComboboxSRN.setDisable(true);
                 searchComboboxSN.setDisable(true);
                 searchComboboxPORT.setDisable(true);
-                searchComboboxVRF.setDisable(true);
+                //searchComboboxVRF.setDisable(true);
+                textFieldVRF.setDisable(true);
                 
                 cargarSRN.setVisible(false);
                 cargarSN.setVisible(false);
