@@ -90,7 +90,7 @@ private Label progressIndicator;
                             Platform.runLater(() -> {
                                 progressIndicator.setText(line);
                             });
-                            System.out.println("line "+line);
+                            System.out.println(line);
                             //label=line;
                             //System.out.println(" "+line);
                             //System.out.println(" "+line);
@@ -112,7 +112,10 @@ private Label progressIndicator;
         return new Task<Integer>() {
             @Override
             protected Integer call() throws Exception {
-               return createGouScript();
+                int resp = -1;
+                if(! isCancelled())
+                    resp = createGouScript();
+               return resp;
             }
         };
     }

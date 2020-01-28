@@ -10,78 +10,84 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.CheckComboBox?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
 <AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tmve.local.controller.GouScriptViewController">
    <children>
-      <GridPane fx:id="gouScriptGridPanel" alignment="TOP_CENTER" hgap="5.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="0.0" prefWidth="59.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="0.0" prefWidth="141.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="TOP_RIGHT" contentDisplay="TOP" text="NodeB" GridPane.rowIndex="1" />
-            <Label text="RNC" />
-            <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <GridPane fx:id="gouScriptGridPanel" alignment="TOP_CENTER" hgap="5.0" vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="0.0" prefWidth="59.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="0.0" prefWidth="141.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <CheckComboBox fx:id="nodebList" prefHeight="31.0" prefWidth="112.0" />
-                  <Button fx:id="cargarNodeB" mnemonicParsing="false" onAction="#onCargarNodeb" text="Cargar" />
+                  <Label alignment="TOP_RIGHT" contentDisplay="TOP" text="NodeB" GridPane.rowIndex="1" />
+                  <Label text="RNC" />
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <CheckComboBox fx:id="nodebList" prefHeight="31.0" prefWidth="112.0" />
+                        <Button fx:id="cargarNodeB" mnemonicParsing="false" onAction="#onCargarNodeb" text="Cargar" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <SearchableComboBox fx:id="searchComboboxRNC" onAction="#onSearchComboboxRNC" />
+                     </children>
+                  </HBox>
+                  <Label text="SRN (Destino)" GridPane.rowIndex="2" />
+                  <Label text="SN (Destino)" GridPane.rowIndex="3" />
+                  <Label text="PORT (Destino)" GridPane.rowIndex="4" />
+                  <Label text="VRF" GridPane.rowIndex="5" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <SearchableComboBox fx:id="searchComboboxSRN" prefHeight="31.0" prefWidth="112.0" />
+                        <Button fx:id="cargarSRN" mnemonicParsing="false" onAction="#onCargarSRN" text="Cargar" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <SearchableComboBox fx:id="searchComboboxSN" prefHeight="31.0" prefWidth="112.0" />
+                        <Button fx:id="cargarSN" mnemonicParsing="false" onAction="#onCargarSN" text="Cargar" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <SearchableComboBox fx:id="searchComboboxPORT" prefHeight="31.0" prefWidth="112.0" />
+                        <Button fx:id="cargarPort" mnemonicParsing="false" onAction="#onCargarPort" text="Cargar" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <children>
+                        <TextField fx:id="textFieldVRF" prefHeight="31.0" prefWidth="112.0" promptText="VRF IP" />
+                        <Button fx:id="cargarVRF" mnemonicParsing="false" onAction="#onCargarVRF" text="Cargar" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <children>
+                        <Button fx:id="crearGouScript" mnemonicParsing="false" onAction="#onCrearGouScript" text="CREAR" />
+                        <ProgressIndicator fx:id="gouScriptProgress" />
+                        <Button fx:id="cancelTaskGouScript" mnemonicParsing="false" onAction="#onCancelTaskGouScript" text="Cancelar" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-               <children>
-                  <SearchableComboBox fx:id="searchComboboxRNC" onAction="#onSearchComboboxRNC" />
-               </children>
-            </HBox>
-            <Label text="SRN (Destino)" GridPane.rowIndex="2" />
-            <Label text="SN (Destino)" GridPane.rowIndex="3" />
-            <Label text="PORT (Destino)" GridPane.rowIndex="4" />
-            <Label text="VRF" GridPane.rowIndex="5" />
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <SearchableComboBox fx:id="searchComboboxSRN" prefHeight="31.0" prefWidth="112.0" />
-                  <Button fx:id="cargarSRN" mnemonicParsing="false" onAction="#onCargarSRN" text="Cargar" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <children>
-                  <SearchableComboBox fx:id="searchComboboxSN" prefHeight="31.0" prefWidth="112.0" />
-                  <Button fx:id="cargarSN" mnemonicParsing="false" onAction="#onCargarSN" text="Cargar" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-               <children>
-                  <SearchableComboBox fx:id="searchComboboxPORT" prefHeight="31.0" prefWidth="112.0" />
-                  <Button fx:id="cargarPort" mnemonicParsing="false" onAction="#onCargarPort" text="Cargar" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <children>
-                  <TextField fx:id="textFieldVRF" prefHeight="31.0" prefWidth="112.0" />
-                  <Button fx:id="cargarVRF" mnemonicParsing="false" onAction="#onCargarVRF" text="Cargar" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-               <children>
-                  <Button fx:id="crearGouScript" mnemonicParsing="false" onAction="#onCrearGouScript" text="CREAR" />
-                  <ProgressIndicator fx:id="gouScriptProgress" />
-               </children>
-            </HBox>
-            <Label fx:id="progressIndicator" GridPane.rowIndex="6" />
+               <padding>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </padding>
+            </GridPane>
+            <Label fx:id="progressIndicator" />
          </children>
-         <padding>
-            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-         </padding>
-      </GridPane>
+      </VBox>
    </children>
 </AnchorPane>

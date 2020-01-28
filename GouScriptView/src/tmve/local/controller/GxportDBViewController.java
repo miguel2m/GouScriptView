@@ -147,8 +147,8 @@ public class GxportDBViewController implements Initializable {
 
                                     gxportButton.setVisible(true);
                                     cancelTask.setVisible(false);
-                                    progressGexportDb.setProgress(100);
-                                    //progressGexportDb.setVisible(false);
+                                    //progressGexportDb.setProgress(100);
+                                    progressGexportDb.setVisible(false);
                                     progresTaskIndicator.setVisible(false);                                   
                                     //logGexportIndicator.setVisible(false);
                                 });

@@ -5,7 +5,6 @@
  */
 package tmve.local.controller;
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -35,17 +34,18 @@ import org.controlsfx.validation.Validator;
 import tmve.local.model.ValidatorModel;
 import tmve.local.services.GouScript;
 import tmve.local.services.IprtCsv;
+
 /**
  * FXML Controller class
  *
  * @author P05144
  */
 public class GouScriptViewController implements Initializable {
-    
+    private GouScript gouScriptTask;
     //private StringBuffer rncSearchName = new StringBuffer("");
     private ObservableList<String> rncPossibleSuggestions = FXCollections.observableArrayList();
     private ObservableList<String> vrfPossibleSuggestions = FXCollections.observableArrayList();
-   // private ObservableList<String> nodebRnc = FXCollections.observableArrayList();
+    // private ObservableList<String> nodebRnc = FXCollections.observableArrayList();
     private AutoCompletionBinding auto;
     @FXML
     private Button cargarNodeB;
@@ -61,7 +61,7 @@ public class GouScriptViewController implements Initializable {
     private Button cargarVRF;
     @FXML
     private CheckComboBox<String> nodebList;
-   // private PrefixSelectionChoiceBox<String> choice1 = new PrefixSelectionChoiceBox<>();
+    // private PrefixSelectionChoiceBox<String> choice1 = new PrefixSelectionChoiceBox<>();
     @FXML
     private SearchableComboBox<String> searchComboboxRNC;
     @FXML
@@ -78,7 +78,10 @@ public class GouScriptViewController implements Initializable {
     private Label progressIndicator;
     @FXML
     private TextField textFieldVRF;
-    private ValidationSupport validationSupport = new ValidationSupport();;
+    @FXML
+    private Button cancelTaskGouScript;
+    private ValidationSupport validationSupport = new ValidationSupport();
+    ;
     /*@FXML
     private PrefixSelectionComboBox<String> prefixSeleccion = new PrefixSelectionComboBox<>();*/
     /*@FXML
@@ -86,6 +89,7 @@ public class GouScriptViewController implements Initializable {
     @FXML
     private TextField searchRnc;
     private GlyphFont glyphFont = GlyphFontRegistry.font("FontAwesome");
+
     /*
     @FXML
     void onTextRncFieldKeyTyped(KeyEvent   event) {
@@ -102,79 +106,77 @@ public class GouScriptViewController implements Initializable {
              //rncPossibleSuggestions.forEach(System.out::println);
                 
            }*/
-          
-    /*}*/
-   /*
+
+ /*}*/
+ /*
     @FXML
     void onKeyPressed(KeyEvent event) {
         /*if(event.getCode() == KeyCode.ENTER ){
             rncSearchName = new StringBuffer(searchRnc.getText());
         }*/
-        /*if(event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE){
+ /*if(event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE){
             if(rncSearchName.length()>0)
                this.rncSearchName.setLength(rncSearchName.length()-1);
         }*/
-   /* }*/
+ /* }*/
     @FXML
     void onCargarNodeb(ActionEvent event) {
-        
+
         //if(!searchRnc.getText().trim().isEmpty()){
         //if(){
-            cargarNodeB.setDisable(true);
-           
-            cargarNodeB.setText("Cargando");
-            cargarNodeB.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
-            AdjnodeCsv nodeb = new AdjnodeCsv(searchComboboxRNC.getValue(),true);
-                       nodeb.start();
-                       nodeb.setOnSucceeded((e) -> {
-                           if(!CollectionUtils.isEmpty( nodeb.getValue())){
-                               Platform.runLater(() -> {
-                                   nodebList.getItems().clear();
-                                   nodebList.getItems().addAll(nodeb.getValue());
-                               });
-                               
-                           }
-                           
-                           cargarNodeB.setVisible(false);
-                           cargarNodeB.setText("Cargar");
-                           cargarNodeB.setGraphic(null);
-                           nodebList.setDisable(false);
-                       });
+        cargarNodeB.setDisable(true);
+
+        cargarNodeB.setText("Cargando");
+        cargarNodeB.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
+        AdjnodeCsv nodeb = new AdjnodeCsv(searchComboboxRNC.getValue(), true);
+        nodeb.start();
+        nodeb.setOnSucceeded((e) -> {
+            if (!CollectionUtils.isEmpty(nodeb.getValue())) {
+                Platform.runLater(() -> {
+                    nodebList.getItems().clear();
+                    nodebList.getItems().addAll(nodeb.getValue());
+                });
+
+            }
+
+            cargarNodeB.setVisible(false);
+            cargarNodeB.setText("Cargar");
+            cargarNodeB.setGraphic(null);
+            nodebList.setDisable(false);
+        });
         //}
     }
 
     @FXML
     void onSearchComboboxRNC(ActionEvent event) {
-        
+
         nodebList.setDisable(true);
 
         cargarNodeB.setVisible(true);
         cargarNodeB.setDisable(false);
 
-        
         searchComboboxSRN.setDisable(true);
         searchComboboxSN.setDisable(true);
         searchComboboxPORT.setDisable(true);
         textFieldVRF.setDisable(true);
-        
-       // searchComboboxVRF.setDisable(true);
-        
+
+        // searchComboboxVRF.setDisable(true);
         cargarSRN.setVisible(true);
         cargarSN.setVisible(true);
         cargarPort.setVisible(true);
         cargarVRF.setVisible(true);
 
     }
-    
+
     @FXML
-    void onCrearGouScript (ActionEvent event) {
+    void onCrearGouScript(ActionEvent event) {
         //validationSupport.setErrorDecorationEnabled(true);
         //validationSupport.setErrorDecorationEnabled(true);
         //validationSupport.redecorate();
-        
-        
+
         crearGouScript.setVisible(false);
         gouScriptProgress.setVisible(true);
+        progressIndicator.setVisible(true);
         //System.out.println("Se creó el GOUSCRIPT");
         nodebList.getCheckModel().getCheckedItems().forEach(System.out::println);
         /*nodebList.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
@@ -183,9 +185,9 @@ public class GouScriptViewController implements Initializable {
              System.out.println("");nodebList.getCheckModel().getSelectedItems();
          }
      });*/
-       /*if(validationSupport.isInvalid())
+ /*if(validationSupport.isInvalid())
             System.out.println("Errores ");*/
-        System.out.println(""+searchComboboxRNC.selectionModelProperty().getValue().getSelectedItem());
+        System.out.println("" + searchComboboxRNC.selectionModelProperty().getValue().getSelectedItem());
         if (searchComboboxRNC.selectionModelProperty().getValue().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR,
                     " Seleccione la RNC ");
@@ -249,22 +251,23 @@ public class GouScriptViewController implements Initializable {
                                     crearGouScript.setVisible(true);
                                     gouScriptProgress.setVisible(false);
                                 } else {
-                                    GouScript gouScript = new GouScript(searchComboboxRNC.getValue(),
+                                    gouScriptTask = new GouScript(searchComboboxRNC.getValue(),
                                             Short.parseShort(searchComboboxSRN.getValue()),
                                             Short.parseShort(searchComboboxSN.getValue()),
                                             Short.parseShort(searchComboboxPORT.getValue()),
                                             textFieldVRF.getText(),
                                             nodebList.getCheckModel().getCheckedItems(),
                                             progressIndicator);
-
-                                    gouScript.start();
-                                    gouScript.setOnSucceeded((e) -> {
+                                    cancelTaskGouScript.setVisible(true);
+                                    gouScriptTask.start();
+                                    gouScriptTask.setOnSucceeded((e) -> {
                                         gouScriptProgress.setVisible(false);
                                         //gouScriptProgress.setProgress(100);
-                                        System.out.println("Termino con " + gouScript.getValue());
+                                        System.out.println("Termino con " + gouScriptTask.getValue());
                                         crearGouScript.setVisible(true);
+                                        cancelTaskGouScript.setVisible(false);
                                         //crearGouScript.setVisible(true);
-
+                                        //progressIndicator.setVisible(false);
                                     });
                                 }
                             }
@@ -272,52 +275,50 @@ public class GouScriptViewController implements Initializable {
                     }
                 }
             }
-            
+
         }
         //gouScriptProgress.setVisible(false);
         //crearGouScript.setVisible(true);
-       
-       
-       //validationSupport.setErrorDecorationEnabled(true);
-       
-       
-       
+
+        //validationSupport.setErrorDecorationEnabled(true);
     }
+
     @FXML
-    void onCargarSRN (ActionEvent event) {
+    void onCargarSRN(ActionEvent event) {
         cargarSRN.setDisable(true);
         cargarSRN.setText("Cargando");
         cargarSRN.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
         IprtCsv iprtCsvSRN = new IprtCsv(searchComboboxRNC.getValue(), true, false, false, false);
-            iprtCsvSRN.start();
-            iprtCsvSRN.setOnSucceeded((a) -> {
+        iprtCsvSRN.start();
+        iprtCsvSRN.setOnSucceeded((a) -> {
 
-                if (!CollectionUtils.isEmpty(iprtCsvSRN.getValue())) {
-                    Platform.runLater(() -> {
-                        searchComboboxSRN.setDisable(false);
-                        if (!searchComboboxSRN.getItems().isEmpty()) {
-                            searchComboboxSRN.getItems().clear();
-                        }
-                        searchComboboxSRN.getItems().addAll(iprtCsvSRN.getValue());
-                    });
-                }
-                //validationSupport.registerValidator(searchComboboxSRN, Validator.createEmptyValidator("Seleccione SRN"));
-                cargarSRN.setVisible(false);
-                cargarSRN.setDisable(false);
-                cargarSRN.setText("Cargar");
-                cargarSRN.setGraphic(null);
-                searchComboboxSRN.setDisable(false);
-            });
-        
+            if (!CollectionUtils.isEmpty(iprtCsvSRN.getValue())) {
+                Platform.runLater(() -> {
+                    searchComboboxSRN.setDisable(false);
+                    if (!searchComboboxSRN.getItems().isEmpty()) {
+                        searchComboboxSRN.getItems().clear();
+                    }
+                    searchComboboxSRN.getItems().addAll(iprtCsvSRN.getValue());
+                });
+            }
+            //validationSupport.registerValidator(searchComboboxSRN, Validator.createEmptyValidator("Seleccione SRN"));
+            cargarSRN.setVisible(false);
+            cargarSRN.setDisable(false);
+            cargarSRN.setText("Cargar");
+            cargarSRN.setGraphic(null);
+            searchComboboxSRN.setDisable(false);
+        });
+
     }
+
     @FXML
-    void onCargarSN (ActionEvent event) {
+    void onCargarSN(ActionEvent event) {
         cargarSN.setDisable(true);
         cargarSN.setText("Cargando");
         cargarSN.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
-        if(!searchComboboxSRN.selectionModelProperty().getValue().isEmpty()){
-        IprtCsv iprtCsvSN = new IprtCsv(searchComboboxRNC.getValue(), false, true, false, false);
-        iprtCsvSN.setSrn(Short.parseShort(searchComboboxSRN.getValue()));
+        if (!searchComboboxSRN.selectionModelProperty().getValue().isEmpty()) {
+            IprtCsv iprtCsvSN = new IprtCsv(searchComboboxRNC.getValue(), false, true, false, false);
+            iprtCsvSN.setSrn(Short.parseShort(searchComboboxSRN.getValue()));
             iprtCsvSN.start();
             iprtCsvSN.setOnSucceeded((a) -> {
 
@@ -337,27 +338,28 @@ public class GouScriptViewController implements Initializable {
                 searchComboboxSN.setDisable(false);
                 //validationSupport.registerValidator(searchComboboxSN, Validator.createEmptyValidator("Seleccione SN"));
             });
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR,
-                                        "Seleccione SRN ");
+                    "Seleccione SRN ");
 
-                                alert.setTitle("Seleccione SRN ");
-                                alert.showAndWait();
-                                crearGouScript.setVisible(true);
-                                gouScriptProgress.setVisible(false);
-                //cargarSN.setVisible(false);
-                cargarSN.setDisable(false);
-                cargarSN.setText("Cargar");
-                cargarSN.setGraphic(null);
+            alert.setTitle("Seleccione SRN ");
+            alert.showAndWait();
+            crearGouScript.setVisible(true);
+            gouScriptProgress.setVisible(false);
+            //cargarSN.setVisible(false);
+            cargarSN.setDisable(false);
+            cargarSN.setText("Cargar");
+            cargarSN.setGraphic(null);
         }
     }
+
     @FXML
-    void onCargarPort (ActionEvent event) {
+    void onCargarPort(ActionEvent event) {
         cargarPort.setDisable(true);
         cargarPort.setText("Cargando");
         cargarPort.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
-        if (!searchComboboxSRN.selectionModelProperty().getValue().isEmpty()&&
-                !searchComboboxSN.selectionModelProperty().getValue().isEmpty()) {
+        if (!searchComboboxSRN.selectionModelProperty().getValue().isEmpty()
+                && !searchComboboxSN.selectionModelProperty().getValue().isEmpty()) {
             IprtCsv iprtCsvPORT = new IprtCsv(searchComboboxRNC.getValue(), false, false, true, false);
             iprtCsvPORT.setSrn(Short.parseShort(searchComboboxSRN.getValue()));
             iprtCsvPORT.setSn(Short.parseShort(searchComboboxSN.getValue()));
@@ -394,104 +396,115 @@ public class GouScriptViewController implements Initializable {
             cargarPort.setGraphic(null);
         }
     }
+
     @FXML
-    void onCargarVRF (ActionEvent event) {
+    void onCargarVRF(ActionEvent event) {
         cargarVRF.setDisable(true);
         cargarVRF.setText("Cargando");
         cargarVRF.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
         IprtCsv iprtCsvVRF = new IprtCsv(searchComboboxRNC.getValue(), false, false, false, true);
-            iprtCsvVRF.start();
-            iprtCsvVRF.setOnSucceeded((a) -> {
+        iprtCsvVRF.start();
+        iprtCsvVRF.setOnSucceeded((a) -> {
 
-                if (!CollectionUtils.isEmpty(iprtCsvVRF.getValue())) {
-                    Platform.runLater(() -> {
-                        
-                        /*if (!textFieldVRF.getItems().isEmpty()) {
+            if (!CollectionUtils.isEmpty(iprtCsvVRF.getValue())) {
+                Platform.runLater(() -> {
+
+                    /*if (!textFieldVRF.getItems().isEmpty()) {
                             searchComboboxVRF.getItems().clear();
                         }*/
-                        //searchComboboxVRF.getItems().addAll(iprtCsvVRF.getValue());
-                        vrfPossibleSuggestions.addAll(iprtCsvVRF.getValue());
-                        TextFields.bindAutoCompletion(textFieldVRF, vrfPossibleSuggestions);
-                        textFieldVRF.setDisable(false);
-                    });
-                }
-                cargarVRF.setVisible(false);
-                cargarVRF.setDisable(false);
-                cargarVRF.setText("Cargar");
-                cargarVRF.setGraphic(null);
-                
-                textFieldVRF.setDisable(false);
+                    //searchComboboxVRF.getItems().addAll(iprtCsvVRF.getValue());
+                    vrfPossibleSuggestions.addAll(iprtCsvVRF.getValue());
+                    TextFields.bindAutoCompletion(textFieldVRF, vrfPossibleSuggestions);
+                    textFieldVRF.setDisable(false);
+                });
+            }
+            cargarVRF.setVisible(false);
+            cargarVRF.setDisable(false);
+            cargarVRF.setText("Cargar");
+            cargarVRF.setGraphic(null);
 
-                //validationSupport.registerValidator(searchComboboxVRF, Validator.createEmptyValidator("Seleccione VRF IP"));
-            });
+            textFieldVRF.setDisable(false);
+
+            //validationSupport.registerValidator(searchComboboxVRF, Validator.createEmptyValidator("Seleccione VRF IP"));
+        });
+    }
+    @FXML
+    void onCancelTaskGouScript(ActionEvent event) {
+        //gouScriptTask
+        Platform.runLater(() -> {
+
+            gouScriptProgress.setVisible(false);
+            crearGouScript.setVisible(true);
+            cancelTaskGouScript.setVisible(false);
+            progressIndicator.setVisible(false);
+        });
+        if (gouScriptTask != null) {
+            gouScriptTask.cancel();
+        }
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-                //validationSupport = new ValidationSupport();
-                //validationSupport.setErrorDecorationEnabled(false);
-                //validationSupport.setErrorDecorationEnabled(true);
-                
-                //validationSupport.registerValidator(nodebList, Validator.createEmptyValidator("Seleccione la lista de NodeB"));
-                
-                
+        //validationSupport = new ValidationSupport();
+        //validationSupport.setErrorDecorationEnabled(false);
+        //validationSupport.setErrorDecorationEnabled(true);
 
-               
-                searchComboboxRNC.setDisable(true);
-                cargarNodeB.setVisible(false);
-                nodebList.setDisable(true);
-                
-                searchComboboxSRN.setDisable(true);
-                searchComboboxSN.setDisable(true);
-                searchComboboxPORT.setDisable(true);
-                //searchComboboxVRF.setDisable(true);
-                textFieldVRF.setDisable(true);
-                
-                cargarSRN.setVisible(false);
-                cargarSN.setVisible(false);
-                cargarPort.setVisible(false);
-                cargarVRF.setVisible(false);
-                
-                gouScriptProgress.setVisible(false);
-                progressIndicator.setVisible(false);
-                //crearGouScript.setDisable(true);
-                //Platform.isSupported(ConditionalFeature.INPUT_METHOD);
-                // TODO
-                /*TextFields.bindAutoCompletion(searchRnc, t -> {
+        //validationSupport.registerValidator(nodebList, Validator.createEmptyValidator("Seleccione la lista de NodeB"));
+        searchComboboxRNC.setDisable(true);
+        cargarNodeB.setVisible(false);
+        nodebList.setDisable(true);
+
+        searchComboboxSRN.setDisable(true);
+        searchComboboxSN.setDisable(true);
+        searchComboboxPORT.setDisable(true);
+        //searchComboboxVRF.setDisable(true);
+        textFieldVRF.setDisable(true);
+
+        cargarSRN.setVisible(false);
+        cargarSN.setVisible(false);
+        cargarPort.setVisible(false);
+        cargarVRF.setVisible(false);
+
+        gouScriptProgress.setVisible(false);
+        progressIndicator.setVisible(false);
+        
+        cancelTaskGouScript.setVisible(false);
+        //crearGouScript.setDisable(true);
+        //Platform.isSupported(ConditionalFeature.INPUT_METHOD);
+        // TODO
+        /*TextFields.bindAutoCompletion(searchRnc, t -> {
                     return list.stream().filter(elem
                             -> {
                         return elem.toLowerCase().startsWith(t.getUserText().toLowerCase());
                     }).collect(Collectors.toList());
                 });*/
 
-               AdjnodeCsv adjnodeCsv = new AdjnodeCsv("rnc",false);
+        AdjnodeCsv adjnodeCsv = new AdjnodeCsv("rnc", false);
 
-                    adjnodeCsv.start();
+        adjnodeCsv.start();
 
-                    adjnodeCsv.setOnSucceeded(d-> {
-                        rncPossibleSuggestions.clear();
-                        
-                        if(!CollectionUtils.isEmpty( adjnodeCsv.getValue())){
-                            /*adjnodeCsv.getValue().forEach((t) -> {
+        adjnodeCsv.setOnSucceeded(d -> {
+            rncPossibleSuggestions.clear();
+
+            if (!CollectionUtils.isEmpty(adjnodeCsv.getValue())) {
+                /*adjnodeCsv.getValue().forEach((t) -> {
 
                                 rncPossibleSuggestions.add(t);
                             });*/
-                            Platform.runLater(() -> {
-                            rncPossibleSuggestions.addAll(adjnodeCsv.getValue());
-                            //prefixSeleccion.setItems(rncPossibleSuggestions);
-                            //prefixSeleccion.setMaxWidth(Double.MAX_VALUE);
-                           // prefixSeleccion.setEditable(true);
-                           searchComboboxRNC.setItems(rncPossibleSuggestions);
-                            });
+                Platform.runLater(() -> {
+                    rncPossibleSuggestions.addAll(adjnodeCsv.getValue());
+                    //prefixSeleccion.setItems(rncPossibleSuggestions);
+                    //prefixSeleccion.setMaxWidth(Double.MAX_VALUE);
+                    // prefixSeleccion.setEditable(true);
+                    searchComboboxRNC.setItems(rncPossibleSuggestions);
+                });
 
+            }
+            System.out.println("VALUE " + adjnodeCsv.getValue());
+            //auto = TextFields.bindAutoCompletion(searchRnc, rncPossibleSuggestions);
+            searchComboboxRNC.setDisable(false);
+            //validationSupport.registerValidator(searchComboboxRNC, Validator.createEmptyValidator("Seleccione una RNC"));
+        });
 
-                        }
-                        System.out.println("VALUE "+adjnodeCsv.getValue());  
-                        //auto = TextFields.bindAutoCompletion(searchRnc, rncPossibleSuggestions);
-                        searchComboboxRNC.setDisable(false);
-                        //validationSupport.registerValidator(searchComboboxRNC, Validator.createEmptyValidator("Seleccione una RNC"));
-                    });
-                   
-            
-    }    
-    
+    }
+
 }
