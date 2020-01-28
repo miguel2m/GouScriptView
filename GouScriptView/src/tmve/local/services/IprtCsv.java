@@ -22,16 +22,36 @@ public class IprtCsv extends Service<List<String>>{
     private String _rnc;
     private boolean iprtSrn;
     private boolean iprtSn;
-    private boolean port;
+    private boolean iprtPort;
     private boolean iprtVRF;
+    private short _srn;
+    private short _sn;
 
-    public IprtCsv(String _rnc, boolean iprtSrn, boolean iprtSn, boolean port, boolean iprtVRF) {
+    public IprtCsv(String _rnc, boolean iprtSrn, boolean iprtSn, boolean iprtPort, boolean iprtVRF) {
         this._rnc = _rnc;
         this.iprtSrn = iprtSrn;
         this.iprtSn = iprtSn;
-        this.port = port;
+        this.iprtPort = iprtPort;
         this.iprtVRF = iprtVRF;
     }
+
+    public short getSrn() {
+        return _srn;
+    }
+
+    public void setSrn(short _srn) {
+        this._srn = _srn;
+    }
+
+    public short getSn() {
+        return _sn;
+    }
+
+    public void setSn(short _sn) {
+        this._sn = _sn;
+    }
+
+    
    
     
     
@@ -52,8 +72,18 @@ public class IprtCsv extends Service<List<String>>{
                     commands.add("-rnc");
                     commands.add(_rnc);
                 if (iprtSrn)   commands.add("-iprtSrn");
-                if (iprtSn)   commands.add("-iprtSn");
-                if (port)   commands.add("-port");
+                if (iprtSn){   
+                    commands.add("-iprtSn");
+                    commands.add("-srn");
+                    commands.add(String.valueOf(this.getSrn()));
+                }
+                if (iprtPort){   
+                    commands.add("-iprtPort");
+                    commands.add("-srn");
+                    commands.add(String.valueOf(this.getSrn()));
+                    commands.add("-sn");
+                    commands.add(String.valueOf(this.getSn()));
+                }
                 if (iprtVRF)   commands.add("-iprtVRF");
                 new ProcessExecutor(commands)
 

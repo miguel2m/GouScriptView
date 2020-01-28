@@ -301,7 +301,9 @@ public class GouScriptViewController implements Initializable {
         cargarSN.setDisable(true);
         cargarSN.setText("Cargando");
         cargarSN.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
+        if(!searchComboboxSRN.selectionModelProperty().getValue().isEmpty()){
         IprtCsv iprtCsvSN = new IprtCsv(searchComboboxRNC.getValue(), false, true, false, false);
+        iprtCsvSN.setSrn(Short.parseShort(searchComboboxSRN.getValue()));
             iprtCsvSN.start();
             iprtCsvSN.setOnSucceeded((a) -> {
 
@@ -321,13 +323,30 @@ public class GouScriptViewController implements Initializable {
                 searchComboboxSN.setDisable(false);
                 //validationSupport.registerValidator(searchComboboxSN, Validator.createEmptyValidator("Seleccione SN"));
             });
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                                        "Seleccione SRN ");
+
+                                alert.setTitle("Seleccione SRN ");
+                                alert.showAndWait();
+                                crearGouScript.setVisible(true);
+                                gouScriptProgress.setVisible(false);
+                //cargarSN.setVisible(false);
+                cargarSN.setDisable(false);
+                cargarSN.setText("Cargar");
+                cargarSN.setGraphic(null);
+        }
     }
     @FXML
     void onCargarPort (ActionEvent event) {
         cargarPort.setDisable(true);
         cargarPort.setText("Cargando");
         cargarPort.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
-        IprtCsv iprtCsvPORT = new IprtCsv(searchComboboxRNC.getValue(), false, false, true, false);
+        if (!searchComboboxSRN.selectionModelProperty().getValue().isEmpty()&&
+                !searchComboboxSN.selectionModelProperty().getValue().isEmpty()) {
+            IprtCsv iprtCsvPORT = new IprtCsv(searchComboboxRNC.getValue(), false, false, true, false);
+            iprtCsvPORT.setSrn(Short.parseShort(searchComboboxSRN.getValue()));
+            iprtCsvPORT.setSn(Short.parseShort(searchComboboxSN.getValue()));
             iprtCsvPORT.start();
             iprtCsvPORT.setOnSucceeded((a) -> {
 
@@ -347,6 +366,19 @@ public class GouScriptViewController implements Initializable {
                 searchComboboxPORT.setDisable(false);
                 //validationSupport.registerValidator(searchComboboxPORT, Validator.createEmptyValidator("Seleccione Puerto"));
             });
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Seleccione SRN y SN  ");
+
+            alert.setTitle("Seleccione SRN y SN ");
+            alert.showAndWait();
+            crearGouScript.setVisible(true);
+            gouScriptProgress.setVisible(false);
+            //cargarPort.setVisible(false);
+            cargarPort.setDisable(false);
+            cargarPort.setText("Cargar");
+            cargarPort.setGraphic(null);
+        }
     }
     @FXML
     void onCargarVRF (ActionEvent event) {

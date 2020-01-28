@@ -75,7 +75,7 @@ private Label progressIndicator;
                     commands.add("-p");
                     commands.add(String.valueOf(port));
                     commands.add("-vrf");
-                    commands.add("_vrf");
+                    commands.add(_vrf);
                     commands.add("-o");
                      commands.add("."+File.separator+"output");
 
