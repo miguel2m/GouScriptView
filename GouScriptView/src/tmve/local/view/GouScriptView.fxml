@@ -52,13 +52,13 @@
                   <Label text="VRF" GridPane.rowIndex="5" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <SearchableComboBox fx:id="searchComboboxSRN" prefHeight="31.0" prefWidth="112.0" />
+                        <SearchableComboBox fx:id="searchComboboxSRN" onAction="#onSearchComboboxSRN" prefHeight="31.0" prefWidth="112.0" />
                         <Button fx:id="cargarSRN" mnemonicParsing="false" onAction="#onCargarSRN" text="Cargar" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <SearchableComboBox fx:id="searchComboboxSN" prefHeight="31.0" prefWidth="112.0" />
+                        <SearchableComboBox fx:id="searchComboboxSN" onAction="#onSearchComboboxSN" prefHeight="31.0" prefWidth="112.0" />
                         <Button fx:id="cargarSN" mnemonicParsing="false" onAction="#onCargarSN" text="Cargar" />
                      </children>
                   </HBox>
@@ -78,7 +78,7 @@
                      <children>
                         <Button fx:id="crearGouScript" mnemonicParsing="false" onAction="#onCrearGouScript" text="CREAR" />
                         <ProgressIndicator fx:id="gouScriptProgress" />
-                        <Button fx:id="cancelTaskGouScript" mnemonicParsing="false" onAction="#onCancelTaskGouScript" text="Cancelar" />
+                        <Button fx:id="cancelTaskGouScript" mnemonicParsing="false" onAction="#onCancelTaskGouScript" text="Cancelar" textFill="RED" />
                      </children>
                   </HBox>
                </children>

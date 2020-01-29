@@ -16,6 +16,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -155,6 +156,12 @@ public class GxportDBViewController implements Initializable {
                             });
                         });
             }
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Por favor ingrese un direcctorio válido ");
+
+            alert.setTitle("Ingresar un directorio válido ");
+            alert.showAndWait();
         }
     }
 

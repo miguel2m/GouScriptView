@@ -174,11 +174,9 @@ public class GouScriptViewController implements Initializable {
         //validationSupport.setErrorDecorationEnabled(true);
         //validationSupport.redecorate();
 
-        crearGouScript.setVisible(false);
-        gouScriptProgress.setVisible(true);
-        progressIndicator.setVisible(true);
+        
         //System.out.println("Se creó el GOUSCRIPT");
-        nodebList.getCheckModel().getCheckedItems().forEach(System.out::println);
+        //nodebList.getCheckModel().getCheckedItems().forEach(System.out::println);
         /*nodebList.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
          public void onChanged(ListChangeListener.Change<? extends String> c) {
 
@@ -251,6 +249,9 @@ public class GouScriptViewController implements Initializable {
                                     crearGouScript.setVisible(true);
                                     gouScriptProgress.setVisible(false);
                                 } else {
+                                    crearGouScript.setVisible(false);
+                                    gouScriptProgress.setVisible(true);
+                                    progressIndicator.setVisible(true);
                                     gouScriptTask = new GouScript(searchComboboxRNC.getValue(),
                                             Short.parseShort(searchComboboxSRN.getValue()),
                                             Short.parseShort(searchComboboxSN.getValue()),
@@ -295,7 +296,9 @@ public class GouScriptViewController implements Initializable {
             if (!CollectionUtils.isEmpty(iprtCsvSRN.getValue())) {
                 Platform.runLater(() -> {
                     searchComboboxSRN.setDisable(false);
+                    
                     if (!searchComboboxSRN.getItems().isEmpty()) {
+                        //searchComboboxSRN.getItems().forEach(System.out::println);
                         searchComboboxSRN.getItems().clear();
                     }
                     searchComboboxSRN.getItems().addAll(iprtCsvSRN.getValue());
@@ -310,7 +313,21 @@ public class GouScriptViewController implements Initializable {
         });
 
     }
+    
 
+    @FXML
+    void onSearchComboboxSRN(ActionEvent event) {
+        //searchComboboxSRN.setDisable(true);
+        searchComboboxSN.setDisable(true);
+        searchComboboxPORT.setDisable(true);
+        //searchComboboxVRF.setDisable(true);
+        //textFieldVRF.setDisable(true);
+
+        //cargarSRN.setVisible(false);
+        cargarSN.setVisible(true);
+        cargarPort.setVisible(true);
+        //cargarVRF.setVisible(false);
+    }
     @FXML
     void onCargarSN(ActionEvent event) {
         cargarSN.setDisable(true);
@@ -328,6 +345,7 @@ public class GouScriptViewController implements Initializable {
                         if (!searchComboboxSN.getItems().isEmpty()) {
                             searchComboboxSN.getItems().clear();
                         }
+                        searchComboboxSN.getItems().clear();
                         searchComboboxSN.getItems().addAll(iprtCsvSN.getValue());
                     });
                 }
@@ -352,7 +370,11 @@ public class GouScriptViewController implements Initializable {
             cargarSN.setGraphic(null);
         }
     }
-
+    @FXML
+    void onSearchComboboxSN(ActionEvent event) {
+        searchComboboxPORT.setDisable(true);
+        cargarPort.setVisible(true);
+    }
     @FXML
     void onCargarPort(ActionEvent event) {
         cargarPort.setDisable(true);
@@ -372,6 +394,7 @@ public class GouScriptViewController implements Initializable {
                         if (!searchComboboxPORT.getItems().isEmpty()) {
                             searchComboboxPORT.getItems().clear();
                         }
+                        //searchComboboxPORT.getItems().clear();
                         searchComboboxPORT.getItems().addAll(iprtCsvPORT.getValue());
                     });
                 }
@@ -413,6 +436,9 @@ public class GouScriptViewController implements Initializable {
                             searchComboboxVRF.getItems().clear();
                         }*/
                     //searchComboboxVRF.getItems().addAll(iprtCsvVRF.getValue());
+                    if(!vrfPossibleSuggestions.isEmpty()){
+                        vrfPossibleSuggestions.clear();
+                    }
                     vrfPossibleSuggestions.addAll(iprtCsvVRF.getValue());
                     TextFields.bindAutoCompletion(textFieldVRF, vrfPossibleSuggestions);
                     textFieldVRF.setDisable(false);
