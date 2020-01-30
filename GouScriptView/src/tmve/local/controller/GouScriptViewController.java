@@ -42,10 +42,8 @@ import tmve.local.services.IprtCsv;
  */
 public class GouScriptViewController implements Initializable {
     private GouScript gouScriptTask;
-    //private StringBuffer rncSearchName = new StringBuffer("");
     private ObservableList<String> rncPossibleSuggestions = FXCollections.observableArrayList();
     private ObservableList<String> vrfPossibleSuggestions = FXCollections.observableArrayList();
-    // private ObservableList<String> nodebRnc = FXCollections.observableArrayList();
     private AutoCompletionBinding auto;
     @FXML
     private Button cargarNodeB;
@@ -61,7 +59,6 @@ public class GouScriptViewController implements Initializable {
     private Button cargarVRF;
     @FXML
     private CheckComboBox<String> nodebList;
-    // private PrefixSelectionChoiceBox<String> choice1 = new PrefixSelectionChoiceBox<>();
     @FXML
     private SearchableComboBox<String> searchComboboxRNC;
     @FXML
@@ -81,11 +78,6 @@ public class GouScriptViewController implements Initializable {
     @FXML
     private Button cancelTaskGouScript;
     private ValidationSupport validationSupport = new ValidationSupport();
-    ;
-    /*@FXML
-    private PrefixSelectionComboBox<String> prefixSeleccion = new PrefixSelectionComboBox<>();*/
-    /*@FXML
-    private PrefixSelectionChoiceBox<String> nodebList;*/
     @FXML
     private TextField searchRnc;
     private GlyphFont glyphFont = GlyphFontRegistry.font("FontAwesome");
@@ -122,8 +114,6 @@ public class GouScriptViewController implements Initializable {
     @FXML
     void onCargarNodeb(ActionEvent event) {
 
-        //if(!searchRnc.getText().trim().isEmpty()){
-        //if(){
         cargarNodeB.setDisable(true);
 
         cargarNodeB.setText("Cargando");
@@ -144,7 +134,7 @@ public class GouScriptViewController implements Initializable {
             cargarNodeB.setGraphic(null);
             nodebList.setDisable(false);
         });
-        //}
+
     }
 
     @FXML
@@ -160,7 +150,7 @@ public class GouScriptViewController implements Initializable {
         searchComboboxPORT.setDisable(true);
         textFieldVRF.setDisable(true);
 
-        // searchComboboxVRF.setDisable(true);
+
         cargarSRN.setVisible(true);
         cargarSN.setVisible(true);
         cargarPort.setVisible(true);
@@ -189,8 +179,7 @@ public class GouScriptViewController implements Initializable {
 
             alert.setTitle("Seleccione la RNC");
             alert.showAndWait();
-            /*crearGouScript.setVisible(true);
-            gouScriptProgress.setVisible(false);*/
+
         } else {
             if (nodebList.getCheckModel().getCheckedItems().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -198,8 +187,7 @@ public class GouScriptViewController implements Initializable {
 
                 alert.setTitle("Seleccione la lista de NODB");
                 alert.showAndWait();
-                /*crearGouScript.setVisible(true);
-                gouScriptProgress.setVisible(false);*/
+
             } else {
                 if (searchComboboxSRN.selectionModelProperty().getValue().isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -207,8 +195,7 @@ public class GouScriptViewController implements Initializable {
 
                     alert.setTitle("Seleccione el SRN ");
                     alert.showAndWait();
-                    /*crearGouScript.setVisible(true);
-                    gouScriptProgress.setVisible(false);*/
+
                 } else {
                     if (searchComboboxSN.selectionModelProperty().getValue().isEmpty()) {
                         Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -216,8 +203,7 @@ public class GouScriptViewController implements Initializable {
 
                         alert.setTitle("Seleccione el SN ");
                         alert.showAndWait();
-                        /*crearGouScript.setVisible(true);
-                        gouScriptProgress.setVisible(false);*/
+
                     } else {
                         if (searchComboboxPORT.selectionModelProperty().getValue().isEmpty()) {
                             Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -225,8 +211,7 @@ public class GouScriptViewController implements Initializable {
 
                             alert.setTitle("Seleccione el Puerto ");
                             alert.showAndWait();
-                            /*crearGouScript.setVisible(true);
-                            gouScriptProgress.setVisible(false);*/
+
                         } else {
                             if (textFieldVRF.getText().isEmpty()) {
                                 Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -234,8 +219,7 @@ public class GouScriptViewController implements Initializable {
 
                                 alert.setTitle("Seleccione la VRF IP  ");
                                 alert.showAndWait();
-                                /*crearGouScript.setVisible(true);
-                                gouScriptProgress.setVisible(false);*/
+
                             } else {
                                 if (!ValidatorModel.isValidIp(textFieldVRF.getText())) {
                                     Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -243,8 +227,7 @@ public class GouScriptViewController implements Initializable {
 
                                     alert.setTitle("IP invalida  ");
                                     alert.showAndWait();
-                                    /*crearGouScript.setVisible(true);
-                                    gouScriptProgress.setVisible(false);*/
+
                                 } else {
                                     
                                     crearGouScript.setVisible(false);
@@ -259,22 +242,15 @@ public class GouScriptViewController implements Initializable {
                                             progressIndicator);
                                     cancelTaskGouScript.setVisible(true);
                                     gouScriptTask.start();
-                                    
-                                    /*searchComboboxRNC.getItems().clear();
-                                    searchComboboxRNC.setDisable(true);*/
-                                    
-                                    
-                                    
-                                    
+                   
                                     gouScriptTask.setOnSucceeded((e) -> {
                                         Platform.runLater(() -> {
                                             gouScriptProgress.setVisible(false);
-                                            //gouScriptProgress.setProgress(100);
+
                                             System.out.println("Termino con " + gouScriptTask.getValue());
                                             crearGouScript.setVisible(true);
                                             cancelTaskGouScript.setVisible(false);
-                                            //crearGouScript.setVisible(true);
-                                            //progressIndicator.setVisible(false);
+
                                             nodebList.setDisable(true);
                                             nodebList.getItems().clear();
                                             searchComboboxSRN.getItems().clear();
@@ -296,10 +272,7 @@ public class GouScriptViewController implements Initializable {
             }
 
         }
-        //gouScriptProgress.setVisible(false);
-        //crearGouScript.setVisible(true);
 
-        //validationSupport.setErrorDecorationEnabled(true);
     }
 
     @FXML
@@ -316,13 +289,13 @@ public class GouScriptViewController implements Initializable {
                     searchComboboxSRN.setDisable(false);
                     
                     if (!searchComboboxSRN.getItems().isEmpty()) {
-                        //searchComboboxSRN.getItems().forEach(System.out::println);
+
                         searchComboboxSRN.getItems().clear();
                     }
                     searchComboboxSRN.getItems().addAll(iprtCsvSRN.getValue());
                 });
             }
-            //validationSupport.registerValidator(searchComboboxSRN, Validator.createEmptyValidator("Seleccione SRN"));
+
             cargarSRN.setVisible(false);
             cargarSRN.setDisable(false);
             cargarSRN.setText("Cargar");
@@ -335,16 +308,13 @@ public class GouScriptViewController implements Initializable {
 
     @FXML
     void onSearchComboboxSRN(ActionEvent event) {
-        //searchComboboxSRN.setDisable(true);
+
         searchComboboxSN.setDisable(true);
         searchComboboxPORT.setDisable(true);
-        //searchComboboxVRF.setDisable(true);
-        //textFieldVRF.setDisable(true);
 
-        //cargarSRN.setVisible(false);
         cargarSN.setVisible(true);
         cargarPort.setVisible(true);
-        //cargarVRF.setVisible(false);
+
     }
     @FXML
     void onCargarSN(ActionEvent event) {
@@ -363,7 +333,7 @@ public class GouScriptViewController implements Initializable {
                         if (!searchComboboxSN.getItems().isEmpty()) {
                             searchComboboxSN.getItems().clear();
                         }
-                        //searchComboboxSN.getItems().clear();
+
                         searchComboboxSN.getItems().addAll(iprtCsvSN.getValue());
                     });
                 }
@@ -372,7 +342,7 @@ public class GouScriptViewController implements Initializable {
                 cargarSN.setText("Cargar");
                 cargarSN.setGraphic(null);
                 searchComboboxSN.setDisable(false);
-                //validationSupport.registerValidator(searchComboboxSN, Validator.createEmptyValidator("Seleccione SN"));
+
             });
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -382,7 +352,7 @@ public class GouScriptViewController implements Initializable {
             alert.showAndWait();
             crearGouScript.setVisible(true);
             gouScriptProgress.setVisible(false);
-            //cargarSN.setVisible(false);
+
             cargarSN.setDisable(false);
             cargarSN.setText("Cargar");
             cargarSN.setGraphic(null);
@@ -412,7 +382,7 @@ public class GouScriptViewController implements Initializable {
                         if (!searchComboboxPORT.getItems().isEmpty()) {
                             searchComboboxPORT.getItems().clear();
                         }
-                        //searchComboboxPORT.getItems().clear();
+
                         searchComboboxPORT.getItems().addAll(iprtCsvPORT.getValue());
                     });
                 }
@@ -421,7 +391,7 @@ public class GouScriptViewController implements Initializable {
                 cargarPort.setText("Cargar");
                 cargarPort.setGraphic(null);
                 searchComboboxPORT.setDisable(false);
-                //validationSupport.registerValidator(searchComboboxPORT, Validator.createEmptyValidator("Seleccione Puerto"));
+
             });
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -431,7 +401,7 @@ public class GouScriptViewController implements Initializable {
             alert.showAndWait();
             crearGouScript.setVisible(true);
             gouScriptProgress.setVisible(false);
-            //cargarPort.setVisible(false);
+
             cargarPort.setDisable(false);
             cargarPort.setText("Cargar");
             cargarPort.setGraphic(null);
@@ -450,10 +420,6 @@ public class GouScriptViewController implements Initializable {
             if (!CollectionUtils.isEmpty(iprtCsvVRF.getValue())) {
                 Platform.runLater(() -> {
 
-                    /*if (!textFieldVRF.getItems().isEmpty()) {
-                            searchComboboxVRF.getItems().clear();
-                        }*/
-                    //searchComboboxVRF.getItems().addAll(iprtCsvVRF.getValue());
                     if(!vrfPossibleSuggestions.isEmpty()){
                         vrfPossibleSuggestions.clear();
                     }
@@ -469,12 +435,11 @@ public class GouScriptViewController implements Initializable {
 
             textFieldVRF.setDisable(false);
 
-            //validationSupport.registerValidator(searchComboboxVRF, Validator.createEmptyValidator("Seleccione VRF IP"));
         });
     }
     @FXML
     void onCancelTaskGouScript(ActionEvent event) {
-        //gouScriptTask
+
         Platform.runLater(() -> {
 
             gouScriptProgress.setVisible(false);
@@ -500,11 +465,7 @@ public class GouScriptViewController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //validationSupport = new ValidationSupport();
-        //validationSupport.setErrorDecorationEnabled(false);
-        //validationSupport.setErrorDecorationEnabled(true);
 
-        //validationSupport.registerValidator(nodebList, Validator.createEmptyValidator("Seleccione la lista de NodeB"));
         searchComboboxRNC.setDisable(true);
         cargarNodeB.setVisible(false);
         nodebList.setDisable(true);
@@ -512,7 +473,7 @@ public class GouScriptViewController implements Initializable {
         searchComboboxSRN.setDisable(true);
         searchComboboxSN.setDisable(true);
         searchComboboxPORT.setDisable(true);
-        //searchComboboxVRF.setDisable(true);
+
         textFieldVRF.setDisable(true);
 
         cargarSRN.setVisible(false);
@@ -524,15 +485,6 @@ public class GouScriptViewController implements Initializable {
         progressIndicator.setVisible(false);
         
         cancelTaskGouScript.setVisible(false);
-        //crearGouScript.setDisable(true);
-        //Platform.isSupported(ConditionalFeature.INPUT_METHOD);
-        // TODO
-        /*TextFields.bindAutoCompletion(searchRnc, t -> {
-                    return list.stream().filter(elem
-                            -> {
-                        return elem.toLowerCase().startsWith(t.getUserText().toLowerCase());
-                    }).collect(Collectors.toList());
-                });*/
 
         AdjnodeCsv adjnodeCsv = new AdjnodeCsv("rnc", false);
 
@@ -542,23 +494,18 @@ public class GouScriptViewController implements Initializable {
             rncPossibleSuggestions.clear();
 
             if (!CollectionUtils.isEmpty(adjnodeCsv.getValue())) {
-                /*adjnodeCsv.getValue().forEach((t) -> {
 
-                                rncPossibleSuggestions.add(t);
-                            });*/
                 Platform.runLater(() -> {
                     rncPossibleSuggestions.addAll(adjnodeCsv.getValue());
-                    //prefixSeleccion.setItems(rncPossibleSuggestions);
-                    //prefixSeleccion.setMaxWidth(Double.MAX_VALUE);
-                    // prefixSeleccion.setEditable(true);
+
                     searchComboboxRNC.setItems(rncPossibleSuggestions);
                 });
 
             }
             System.out.println("VALUE " + adjnodeCsv.getValue());
-            //auto = TextFields.bindAutoCompletion(searchRnc, rncPossibleSuggestions);
+
             searchComboboxRNC.setDisable(false);
-            //validationSupport.registerValidator(searchComboboxRNC, Validator.createEmptyValidator("Seleccione una RNC"));
+
         });
 
     }
