@@ -21,7 +21,8 @@
             <GridPane fx:id="gouScriptGridPanel" alignment="TOP_CENTER" hgap="5.0" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="0.0" prefWidth="59.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="0.0" prefWidth="141.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.0" minWidth="0.0" prefWidth="210.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="72.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -37,8 +38,7 @@
                   <Label text="RNC" />
                   <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <CheckComboBox fx:id="nodebList" prefHeight="31.0" prefWidth="112.0" />
-                        <Button fx:id="cargarNodeB" mnemonicParsing="false" onAction="#onCargarNodeb" text="Cargar" />
+                        <CheckComboBox fx:id="nodebList" prefHeight="31.0" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -52,26 +52,22 @@
                   <Label text="VRF" GridPane.rowIndex="5" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <SearchableComboBox fx:id="searchComboboxSRN" onAction="#onSearchComboboxSRN" prefHeight="31.0" prefWidth="112.0" />
-                        <Button fx:id="cargarSRN" mnemonicParsing="false" onAction="#onCargarSRN" text="Cargar" />
+                        <SearchableComboBox fx:id="searchComboboxSRN" onAction="#onSearchComboboxSRN" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <SearchableComboBox fx:id="searchComboboxSN" onAction="#onSearchComboboxSN" prefHeight="31.0" prefWidth="112.0" />
-                        <Button fx:id="cargarSN" mnemonicParsing="false" onAction="#onCargarSN" text="Cargar" />
+                        <SearchableComboBox fx:id="searchComboboxSN" onAction="#onSearchComboboxSN" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <children>
-                        <SearchableComboBox fx:id="searchComboboxPORT" prefHeight="31.0" prefWidth="112.0" />
-                        <Button fx:id="cargarPort" mnemonicParsing="false" onAction="#onCargarPort" text="Cargar" />
+                        <SearchableComboBox fx:id="searchComboboxPORT" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <children>
-                        <TextField fx:id="textFieldVRF" prefHeight="31.0" prefWidth="112.0" promptText="VRF IP" />
-                        <Button fx:id="cargarVRF" mnemonicParsing="false" onAction="#onCargarVRF" text="Cargar" />
+                        <TextField fx:id="textFieldVRF" promptText="VRF IP" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
@@ -81,6 +77,11 @@
                         <Button fx:id="cancelTaskGouScript" mnemonicParsing="false" onAction="#onCancelTaskGouScript" text="Cancelar" textFill="RED" />
                      </children>
                   </HBox>
+                  <Button fx:id="cargarNodeB" mnemonicParsing="false" onAction="#onCargarNodeb" text="Cargar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="cargarSRN" mnemonicParsing="false" onAction="#onCargarSRN" text="Cargar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Button fx:id="cargarSN" mnemonicParsing="false" onAction="#onCargarSN" text="Cargar" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Button fx:id="cargarPort" mnemonicParsing="false" onAction="#onCargarPort" text="Cargar" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Button fx:id="cargarVRF" mnemonicParsing="false" onAction="#onCargarVRF" text="Cargar" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                </children>
                <padding>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />

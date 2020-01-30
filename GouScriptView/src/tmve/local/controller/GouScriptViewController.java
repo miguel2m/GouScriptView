@@ -166,25 +166,22 @@ public class GouScriptViewController implements Initializable {
         cargarPort.setVisible(true);
         cargarVRF.setVisible(true);
 
+        nodebList.getItems().clear();
+        searchComboboxSRN.getItems().clear();
+        searchComboboxSRN.setDisable(true);
+        searchComboboxSN.getItems().clear();
+        searchComboboxSN.setDisable(true);
+        searchComboboxPORT.getItems().clear();
+        searchComboboxPORT.setDisable(true);
+        vrfPossibleSuggestions.clear();
+        textFieldVRF.clear();
+        textFieldVRF.setDisable(true);
+
     }
 
     @FXML
     void onCrearGouScript(ActionEvent event) {
-        //validationSupport.setErrorDecorationEnabled(true);
-        //validationSupport.setErrorDecorationEnabled(true);
-        //validationSupport.redecorate();
 
-        
-        //System.out.println("Se creó el GOUSCRIPT");
-        //nodebList.getCheckModel().getCheckedItems().forEach(System.out::println);
-        /*nodebList.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
-         public void onChanged(ListChangeListener.Change<? extends String> c) {
-
-             System.out.println("");nodebList.getCheckModel().getSelectedItems();
-         }
-     });*/
- /*if(validationSupport.isInvalid())
-            System.out.println("Errores ");*/
         System.out.println("" + searchComboboxRNC.selectionModelProperty().getValue().getSelectedItem());
         if (searchComboboxRNC.selectionModelProperty().getValue().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -192,8 +189,8 @@ public class GouScriptViewController implements Initializable {
 
             alert.setTitle("Seleccione la RNC");
             alert.showAndWait();
-            crearGouScript.setVisible(true);
-            gouScriptProgress.setVisible(false);
+            /*crearGouScript.setVisible(true);
+            gouScriptProgress.setVisible(false);*/
         } else {
             if (nodebList.getCheckModel().getCheckedItems().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -201,8 +198,8 @@ public class GouScriptViewController implements Initializable {
 
                 alert.setTitle("Seleccione la lista de NODB");
                 alert.showAndWait();
-                crearGouScript.setVisible(true);
-                gouScriptProgress.setVisible(false);
+                /*crearGouScript.setVisible(true);
+                gouScriptProgress.setVisible(false);*/
             } else {
                 if (searchComboboxSRN.selectionModelProperty().getValue().isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -210,8 +207,8 @@ public class GouScriptViewController implements Initializable {
 
                     alert.setTitle("Seleccione el SRN ");
                     alert.showAndWait();
-                    crearGouScript.setVisible(true);
-                    gouScriptProgress.setVisible(false);
+                    /*crearGouScript.setVisible(true);
+                    gouScriptProgress.setVisible(false);*/
                 } else {
                     if (searchComboboxSN.selectionModelProperty().getValue().isEmpty()) {
                         Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -219,8 +216,8 @@ public class GouScriptViewController implements Initializable {
 
                         alert.setTitle("Seleccione el SN ");
                         alert.showAndWait();
-                        crearGouScript.setVisible(true);
-                        gouScriptProgress.setVisible(false);
+                        /*crearGouScript.setVisible(true);
+                        gouScriptProgress.setVisible(false);*/
                     } else {
                         if (searchComboboxPORT.selectionModelProperty().getValue().isEmpty()) {
                             Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -228,8 +225,8 @@ public class GouScriptViewController implements Initializable {
 
                             alert.setTitle("Seleccione el Puerto ");
                             alert.showAndWait();
-                            crearGouScript.setVisible(true);
-                            gouScriptProgress.setVisible(false);
+                            /*crearGouScript.setVisible(true);
+                            gouScriptProgress.setVisible(false);*/
                         } else {
                             if (textFieldVRF.getText().isEmpty()) {
                                 Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -237,8 +234,8 @@ public class GouScriptViewController implements Initializable {
 
                                 alert.setTitle("Seleccione la VRF IP  ");
                                 alert.showAndWait();
-                                crearGouScript.setVisible(true);
-                                gouScriptProgress.setVisible(false);
+                                /*crearGouScript.setVisible(true);
+                                gouScriptProgress.setVisible(false);*/
                             } else {
                                 if (!ValidatorModel.isValidIp(textFieldVRF.getText())) {
                                     Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -246,9 +243,10 @@ public class GouScriptViewController implements Initializable {
 
                                     alert.setTitle("IP invalida  ");
                                     alert.showAndWait();
-                                    crearGouScript.setVisible(true);
-                                    gouScriptProgress.setVisible(false);
+                                    /*crearGouScript.setVisible(true);
+                                    gouScriptProgress.setVisible(false);*/
                                 } else {
+                                    
                                     crearGouScript.setVisible(false);
                                     gouScriptProgress.setVisible(true);
                                     progressIndicator.setVisible(true);
@@ -261,14 +259,34 @@ public class GouScriptViewController implements Initializable {
                                             progressIndicator);
                                     cancelTaskGouScript.setVisible(true);
                                     gouScriptTask.start();
+                                    
+                                    /*searchComboboxRNC.getItems().clear();
+                                    searchComboboxRNC.setDisable(true);*/
+                                    
+                                    
+                                    
+                                    
                                     gouScriptTask.setOnSucceeded((e) -> {
-                                        gouScriptProgress.setVisible(false);
-                                        //gouScriptProgress.setProgress(100);
-                                        System.out.println("Termino con " + gouScriptTask.getValue());
-                                        crearGouScript.setVisible(true);
-                                        cancelTaskGouScript.setVisible(false);
-                                        //crearGouScript.setVisible(true);
-                                        //progressIndicator.setVisible(false);
+                                        Platform.runLater(() -> {
+                                            gouScriptProgress.setVisible(false);
+                                            //gouScriptProgress.setProgress(100);
+                                            System.out.println("Termino con " + gouScriptTask.getValue());
+                                            crearGouScript.setVisible(true);
+                                            cancelTaskGouScript.setVisible(false);
+                                            //crearGouScript.setVisible(true);
+                                            //progressIndicator.setVisible(false);
+                                            nodebList.setDisable(true);
+                                            nodebList.getItems().clear();
+                                            searchComboboxSRN.getItems().clear();
+                                            searchComboboxSRN.setDisable(true);
+                                            searchComboboxSN.getItems().clear();
+                                            searchComboboxSN.setDisable(true);
+                                            searchComboboxPORT.getItems().clear();
+                                            searchComboboxPORT.setDisable(true);
+                                            vrfPossibleSuggestions.clear();
+                                            textFieldVRF.clear();
+                                            textFieldVRF.setDisable(true);
+                                        });
                                     });
                                 }
                             }
@@ -345,7 +363,7 @@ public class GouScriptViewController implements Initializable {
                         if (!searchComboboxSN.getItems().isEmpty()) {
                             searchComboboxSN.getItems().clear();
                         }
-                        searchComboboxSN.getItems().clear();
+                        //searchComboboxSN.getItems().clear();
                         searchComboboxSN.getItems().addAll(iprtCsvSN.getValue());
                     });
                 }
@@ -463,6 +481,18 @@ public class GouScriptViewController implements Initializable {
             crearGouScript.setVisible(true);
             cancelTaskGouScript.setVisible(false);
             progressIndicator.setVisible(false);
+            
+            nodebList.setDisable(true);
+            nodebList.getItems().clear();
+            searchComboboxSRN.getItems().clear();
+            searchComboboxSRN.setDisable(true);
+            searchComboboxSN.getItems().clear();
+            searchComboboxSN.setDisable(true);
+            searchComboboxPORT.getItems().clear();
+            searchComboboxPORT.setDisable(true);
+            vrfPossibleSuggestions.clear();
+            textFieldVRF.clear();
+            textFieldVRF.setDisable(true);
         });
         if (gouScriptTask.isRunning()) {
             gouScriptTask.cancel();

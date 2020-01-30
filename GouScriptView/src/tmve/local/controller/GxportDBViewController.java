@@ -152,6 +152,7 @@ public class GxportDBViewController implements Initializable {
                                     progressGexportDb.setVisible(false);
                                     progresTaskIndicator.setVisible(false);                                   
                                     //logGexportIndicator.setVisible(false);
+                                    textOpenFile.clear();
                                 });
                             });
                         });
@@ -181,9 +182,10 @@ public class GxportDBViewController implements Initializable {
                                     cancelTask.setVisible(false);
                                     progressGexportDb.setVisible(false);
                                     progresTaskIndicator.setVisible(false);
+                                    textOpenFile.clear();
                                     //logGexportIndicator.setVisible(false);
                                 });
-        if(ungz != null)
+        if(ungz.isRunning())
                 ungz.cancel();
                 
         if(gexportParser.isRunning())
