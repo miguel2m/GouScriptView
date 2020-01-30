@@ -30,8 +30,9 @@ private short port;
 private String _vrf;
 private List<String> inputNodes ;
 private Label progressIndicator;
-
-    public GouScript(String _rnc, short _srn, short _sn, short port, String _vrf, List<String> inputNodes, Label progressIndicator) {
+private String db;
+private String output;
+    public GouScript(String _rnc, short _srn, short _sn, short port, String _vrf, List<String> inputNodes, Label progressIndicator, String db,String output) {
         this._rnc = _rnc;
         this._srn = _srn;
         this._sn = _sn;
@@ -39,6 +40,8 @@ private Label progressIndicator;
         this._vrf = _vrf;
         this.inputNodes = inputNodes;
         this.progressIndicator = progressIndicator;
+        this.db=db;
+        this.output= output;
     }
 
     
@@ -60,7 +63,7 @@ private Label progressIndicator;
                     commands.add("-jar");
                     commands.add("." + File.separator + "lib" + File.separator + "GouScript.jar");
                     commands.add("-db");
-                    commands.add(MainController.outputDirectory+File.separator);
+                    commands.add(this.db+File.separator);
                     commands.add("-rnc");
                     commands.add(_rnc);
                     commands.add("-i");
@@ -77,7 +80,7 @@ private Label progressIndicator;
                     commands.add("-vrf");
                     commands.add(_vrf);
                     commands.add("-o");
-                     commands.add("."+File.separator+"output");
+                     commands.add(this.output);
 
                 out = new ProcessExecutor(commands)
 

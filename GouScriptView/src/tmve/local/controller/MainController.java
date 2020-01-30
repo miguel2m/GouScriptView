@@ -93,7 +93,7 @@ public class MainController extends BaseController implements Initializable {
             //viewFactory.addTab(gxportDbTab, "GxportDBView.fxml");
             
             
-            gouScriptTab.setOnSelectionChanged((event) -> {
+            /*gouScriptTab.setOnSelectionChanged((event) -> {
                 if (gouScriptTab.isSelected()) {
                     // refreshTabBData();
                     //System.out.println("gouScriptTab ");
@@ -117,7 +117,7 @@ public class MainController extends BaseController implements Initializable {
                     
                     
                 }
-            });
+            });*/
         
     }    
     

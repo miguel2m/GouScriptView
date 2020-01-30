@@ -26,13 +26,14 @@ public class IprtCsv extends Service<List<String>>{
     private boolean iprtVRF;
     private short _srn;
     private short _sn;
-
-    public IprtCsv(String _rnc, boolean iprtSrn, boolean iprtSn, boolean iprtPort, boolean iprtVRF) {
+    private String db;
+    public IprtCsv(String _rnc, boolean iprtSrn, boolean iprtSn, boolean iprtPort, boolean iprtVRF, String db) {
         this._rnc = _rnc;
         this.iprtSrn = iprtSrn;
         this.iprtSn = iprtSn;
         this.iprtPort = iprtPort;
         this.iprtVRF = iprtVRF;
+        this.db=db;
     }
 
     public short getSrn() {
@@ -68,7 +69,7 @@ public class IprtCsv extends Service<List<String>>{
                     commands.add("-jar");
                     commands.add("." + File.separator + "lib" + File.separator + "ReadGxportCsvDB.jar");
                     commands.add("-db");
-                    commands.add(MainController.outputDirectory+File.separator);
+                    commands.add(this.db+File.separator);
                     commands.add("-rnc");
                     commands.add(_rnc);
                 if (iprtSrn)   commands.add("-iprtSrn");

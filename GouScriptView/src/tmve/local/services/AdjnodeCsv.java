@@ -22,14 +22,13 @@ import tmve.local.controller.MainController;
 public class AdjnodeCsv extends Service<List<String>>{
     private String _rnc;
     private boolean node;
+    private String db;
 
-    public AdjnodeCsv(String _rnc, boolean node) {
+    public AdjnodeCsv(String _rnc, boolean node, String db) {
         this._rnc = _rnc;
         this.node = node;
+        this.db = db;
     }
- 
-    
- 
     
     public List<String> getAdjNode() {
         List<String> _rncList = new ArrayList<>();
@@ -43,7 +42,7 @@ public class AdjnodeCsv extends Service<List<String>>{
                     commands.add("-jar");
                     commands.add("." + File.separator + "lib" + File.separator + "ReadGxportCsvDB.jar");
                     commands.add("-db");
-                    commands.add(MainController.outputDirectory+File.separator);
+                    commands.add(this.db + File.separator);
                     commands.add("-rnc");
                     commands.add(_rnc);
                 if (node)   commands.add("-n");
