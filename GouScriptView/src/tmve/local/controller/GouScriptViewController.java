@@ -464,7 +464,7 @@ public class GouScriptViewController implements Initializable {
             cancelTaskGouScript.setVisible(false);
             progressIndicator.setVisible(false);
         });
-        if (gouScriptTask != null) {
+        if (gouScriptTask.isRunning()) {
             gouScriptTask.cancel();
         }
     }

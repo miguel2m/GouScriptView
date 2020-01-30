@@ -186,7 +186,7 @@ public class GxportDBViewController implements Initializable {
         if(ungz != null)
                 ungz.cancel();
                 
-        if(gexportParser !=null)
+        if(gexportParser.isRunning())
             gexportParser.cancel();
     }
     GlyphFont glyphFont = GlyphFontRegistry.font("FontAwesome");
