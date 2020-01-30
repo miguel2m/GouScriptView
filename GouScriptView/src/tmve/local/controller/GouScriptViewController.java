@@ -323,19 +323,19 @@ public class GouScriptViewController implements Initializable {
                                                     cancelTaskGouScript.setVisible(false);
 
                                                     cargarRNC.setVisible(false);
-                                                    //searchComboboxRNC.setDisable(true);
+                                                    searchComboboxRNC.setDisable(true);
                                                     //searchComboboxRNC.getItems().clear();
 
                                                     //searchComboboxRNC.getItems().clear();
-                                                    //searchComboboxRNC.setDisable(true);
-                                                    //nodebList.setDisable(true);
+                                                    searchComboboxRNC.setDisable(true);
+                                                    nodebList.setDisable(true);
                                                     //nodebList.getItems().clear();
                                                     //searchComboboxSRN.getItems().clear();
-                                                    //searchComboboxSRN.setDisable(true);
+                                                    searchComboboxSRN.setDisable(true);
                                                     //searchComboboxSN.getItems().clear();
-                                                    //searchComboboxSN.setDisable(true);
+                                                    searchComboboxSN.setDisable(true);
                                                     //searchComboboxPORT.getItems().clear();
-                                                    //searchComboboxPORT.setDisable(true);
+                                                    searchComboboxPORT.setDisable(true);
                                                     //vrfPossibleSuggestions.clear();
                                                     textFieldVRF.clear();
                                                     textFieldVRF.setDisable(true);
@@ -529,17 +529,17 @@ public class GouScriptViewController implements Initializable {
             progressIndicator.setVisible(false);
             
             cargarRNC.setVisible(true);
-            //searchComboboxRNC.setDisable(true);
+            searchComboboxRNC.setDisable(true);
             //searchComboboxRNC.getItems().clear();
             
-            //nodebList.setDisable(true);
+            nodebList.setDisable(true);
             //nodebList.getItems().clear();
             //searchComboboxSRN.getItems().clear();
-            //searchComboboxSRN.setDisable(true);
+            searchComboboxSRN.setDisable(true);
             //searchComboboxSN.getItems().clear();
-            //searchComboboxSN.setDisable(true);
+            searchComboboxSN.setDisable(true);
             //searchComboboxPORT.getItems().clear();
-            //searchComboboxPORT.setDisable(true);
+            searchComboboxPORT.setDisable(true);
             //vrfPossibleSuggestions.clear();
             textFieldVRF.clear();
             textFieldVRF.setDisable(true);

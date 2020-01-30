@@ -40,10 +40,10 @@
                   <Label text="RNC" GridPane.rowIndex="1" />
                   <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <CheckComboBox fx:id="nodebList" prefHeight="31.0" />
+                        <CheckComboBox fx:id="nodebList" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <SearchableComboBox fx:id="searchComboboxRNC" onAction="#onSearchComboboxRNC" />
                      </children>
@@ -52,27 +52,27 @@
                   <Label text="SN (Destino)" GridPane.rowIndex="4" />
                   <Label text="PORT (Destino)" GridPane.rowIndex="5" />
                   <Label text="VRF" GridPane.rowIndex="6" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
                         <SearchableComboBox fx:id="searchComboboxSRN" onAction="#onSearchComboboxSRN" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <children>
                         <SearchableComboBox fx:id="searchComboboxSN" onAction="#onSearchComboboxSN" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <children>
                         <SearchableComboBox fx:id="searchComboboxPORT" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <children>
                         <TextField fx:id="textFieldVRF" promptText="VRF IP" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <children>
                         <Button fx:id="crearGouScript" mnemonicParsing="false" onAction="#onCrearGouScript" text="CREAR" />
                         <ProgressIndicator fx:id="gouScriptProgress" />
@@ -87,12 +87,12 @@
                   <Label fx:id="labelForm" text="GEXPORT (CSV Folder)" />
                   <Button fx:id="cargarGxportFolder" mnemonicParsing="false" onAction="#onCargarGxportFolder" GridPane.columnIndex="2" />
                   <Label text="Output (Folder)" GridPane.rowIndex="7" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                  <HBox GridPane.columnIndex="1">
                      <children>
                         <TextField fx:id="textGxportFolder" editable="false" promptText="Gexport DB (Folder)" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <HBox GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <children>
                         <TextField fx:id="textOutputFolder" editable="false" promptText="Carpeta de descarga" />
                      </children>
