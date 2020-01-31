@@ -133,7 +133,7 @@ public class GxportDBViewController implements Initializable {
                         extractDirectory.mkdir();
                     }
                     //}               
-                    ungz = new UnGzip(outputDirectory.getAbsolutePath(), outputDirectory.getAbsolutePath() + File.separator + "extract", logGexportIndicator);
+                    ungz = new UnGzip(inputDirectory.getAbsolutePath(), outputDirectory.getAbsolutePath() + File.separator + "extract", logGexportIndicator);
 
                     ungz.start();
                     ungz.setOnRunning(a -> {
@@ -143,7 +143,7 @@ public class GxportDBViewController implements Initializable {
                         //System.out.println(textOpenFile.getText() + " DONE");
                         //gxportButton.setDisable(false);
 
-                        gexportParser = new GexportParser(outputDirectory.getAbsolutePath() + File.separator + "extract", MainController.outputDirectory, logGexportIndicator);
+                        gexportParser = new GexportParser(outputDirectory.getAbsolutePath() + File.separator + "extract", outputDirectory.getAbsolutePath(), logGexportIndicator);
                         gexportParser.start();
                         //progressGexportDb.visibleProperty().bind(gexportParser.runningProperty());
                         gexportParser.setOnRunning(c -> {
