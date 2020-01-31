@@ -152,6 +152,7 @@ public class GouScriptViewController implements Initializable {
                 Platform.runLater(() -> {
                     /*if(!rncPossibleSuggestions.isEmpty())
                         rncPossibleSuggestions.clear();*/
+                    searchRnc.setDisable(false);
                     rncPossibleSuggestions.setAll(adjnodeCsv.getValue());
                     //searchComboboxRNC.getItems().clear();
                     searchComboboxRNC.setItems(rncPossibleSuggestions);
@@ -563,6 +564,7 @@ public class GouScriptViewController implements Initializable {
                     textGxportFolder.setText(inputGxportFolder.getAbsolutePath());
                     cargarRNC.setVisible(true);
                     cargarRNC.setDisable(false);
+                    searchRnc.setDisable(true);
                     //searchComboboxRNC.setDisable(true);
                 });
             } else {

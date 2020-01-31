@@ -11,7 +11,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab fx:id="gxportDbTab" text="GXPORT DB">
               <fx:include source="GxportDBView.fxml" />
@@ -126,9 +126,9 @@
       </MenuBar>
    </top>
    <bottom>
-      <VBox prefHeight="28.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
          <children>
-            <Label fx:id="labelFooter" alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="601.0" text="Derechos reservados - Telefónica Venezuela" textAlignment="CENTER" />
+            <Label fx:id="labelFooter" alignment="CENTER" contentDisplay="CENTER" text="Derechos reservados - Telefónica Venezuela" textAlignment="CENTER" />
          </children>
       </VBox>
    </bottom>

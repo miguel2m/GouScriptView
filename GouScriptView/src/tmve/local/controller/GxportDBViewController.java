@@ -37,6 +37,7 @@ import tmve.local.services.UnGzip;
  */
 public class GxportDBViewController implements Initializable {
     private File inputDirectory;
+    private File outputDirectory;
     private  UnGzip ungz;
     private  GexportParser gexportParser;
     
@@ -80,7 +81,10 @@ public class GxportDBViewController implements Initializable {
      */
     @FXML
     private Label progresTaskIndicator;
-    
+    @FXML
+    private TextField textOutputFile;
+    @FXML
+    private Button fileOutput;
     /**
      * METODO que se activa cuando el usuario presiona el boton de abrir carpeta
      * para seleccionar el directorio destino de la BASE DE DATOS
@@ -105,69 +109,87 @@ public class GxportDBViewController implements Initializable {
         
         if(!textOpenFile.getText().equals(null) &&
                 !textOpenFile.getText().isEmpty()){
-
             
-            //Is path is readable
-            Path file = Paths.get(textOpenFile.getText());
-            if(Files.isReadable(file)){
-                Platform.runLater(() -> {
-                            
-                    gxportButton.setVisible(false);
-                    cancelTask.setVisible(true);
-                    progressGexportDb.setVisible(true);
-                    logGexportIndicator.setVisible(true);
-                    progresTaskIndicator.setVisible(true);
-                });
-                
-                FileUtils.deleteDirectory(new File(MainController.outputDirectory));
-                File directory = new File(MainController.outputDirectory);
-                //if (!directory.exists()){
-                    directory.mkdir();
-                    File extractDirectory = new File(MainController.outputDirectory+File.separator+"extract");
-                    if (!extractDirectory.exists())
-                        extractDirectory.mkdir();                   
-                //}               
-                ungz = new UnGzip(textOpenFile.getText(),MainController.outputDirectory+File.separator+"extract",logGexportIndicator);
+            if (!textOutputFile.getText().isEmpty()) {
 
-                        ungz.start();
-                        ungz.setOnRunning(a -> {
-                            progresTaskIndicator.setText("Descomprimiendo");
+                //Is path is readable
+                Path file = Paths.get(textOpenFile.getText());
+                if (Files.isReadable(file)) {
+                    Platform.runLater(() -> {
+
+                        gxportButton.setVisible(false);
+                        cancelTask.setVisible(true);
+                        progressGexportDb.setVisible(true);
+                        logGexportIndicator.setVisible(true);
+                        progresTaskIndicator.setVisible(true);
+                    });
+
+                    /*FileUtils.deleteDirectory(new File(MainController.outputDirectory));
+                    File directory = new File(MainController.outputDirectory);
+                    //if (!directory.exists()){
+                    directory.mkdir();*/
+                    File extractDirectory = new File(outputDirectory.getAbsolutePath()+ File.separator + "extract");
+                    if (!extractDirectory.exists()) {
+                        extractDirectory.mkdir();
+                    }
+                    //}               
+                    ungz = new UnGzip(outputDirectory.getAbsolutePath(), outputDirectory.getAbsolutePath() + File.separator + "extract", logGexportIndicator);
+
+                    ungz.start();
+                    ungz.setOnRunning(a -> {
+                        progresTaskIndicator.setText("Descomprimiendo");
+                    });
+                    ungz.setOnSucceeded(b -> {
+                        //System.out.println(textOpenFile.getText() + " DONE");
+                        //gxportButton.setDisable(false);
+
+                        gexportParser = new GexportParser(outputDirectory.getAbsolutePath() + File.separator + "extract", MainController.outputDirectory, logGexportIndicator);
+                        gexportParser.start();
+                        //progressGexportDb.visibleProperty().bind(gexportParser.runningProperty());
+                        gexportParser.setOnRunning(c -> {
+                            progresTaskIndicator.setText("Convirtiendo XML a CSV");
                         });
-                        ungz.setOnSucceeded(b -> {
-                            //System.out.println(textOpenFile.getText() + " DONE");
-                            //gxportButton.setDisable(false);
+                        gexportParser.setOnSucceeded(d -> {
+                            Platform.runLater(() -> {
 
-                            gexportParser =new GexportParser(MainController.outputDirectory+File.separator+"extract",MainController.outputDirectory,logGexportIndicator);
-                            gexportParser.start();
-                            //progressGexportDb.visibleProperty().bind(gexportParser.runningProperty());
-                            gexportParser.setOnRunning(c -> {
-                                progresTaskIndicator.setText("Convirtiendo XML a CSV");
-                            });
-                            gexportParser.setOnSucceeded(d-> {
-                                Platform.runLater(() -> {
-
-                                    gxportButton.setVisible(true);
-                                    cancelTask.setVisible(false);
-                                    //progressGexportDb.setProgress(100);
-                                    progressGexportDb.setVisible(false);
-                                    progresTaskIndicator.setVisible(false);                                   
-                                    //logGexportIndicator.setVisible(false);
-                                    textOpenFile.clear();
-                                });
+                                gxportButton.setVisible(true);
+                                cancelTask.setVisible(false);
+                                //progressGexportDb.setProgress(100);
+                                progressGexportDb.setVisible(false);
+                                progresTaskIndicator.setVisible(false);
+                                //logGexportIndicator.setVisible(false);
+                                textOpenFile.clear();
+                                textOutputFile.clear();
                             });
                         });
+                    });
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR,
+                        "Por favor ingrese un direcctorio DESTINO válido ");
+
+                alert.setTitle("Ingresar un directorio DESTINO válido ");
+                alert.showAndWait();
             }
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR,
-                    "Por favor ingrese un direcctorio válido ");
+                    "Por favor ingrese un direcctorio GXPORT válido ");
 
-            alert.setTitle("Ingresar un directorio válido ");
+            alert.setTitle("Ingresar un directorio GXPORT válido ");
             alert.showAndWait();
         }
     }
 
          
-    
+    @FXML
+    void onFileOutput(ActionEvent event) {
+        DirectoryChooser direcotryChooser = new DirectoryChooser();
+        direcotryChooser.setTitle("Import GXPORT Data Base");
+        Stage stage = (Stage)labelGxportInput.getScene().getWindow();
+        outputDirectory = direcotryChooser.showDialog(stage);
+        if(outputDirectory!=null)
+            textOutputFile.setText(outputDirectory.getAbsolutePath());
+    }
     
     
     /**
@@ -177,12 +199,13 @@ public class GxportDBViewController implements Initializable {
     @FXML
     void onCancelTask(ActionEvent event) {
         Platform.runLater(() -> {
-
+                                    
                                     gxportButton.setVisible(true);
                                     cancelTask.setVisible(false);
                                     progressGexportDb.setVisible(false);
                                     progresTaskIndicator.setVisible(false);
                                     textOpenFile.clear();
+                                    textOutputFile.clear();
                                     //logGexportIndicator.setVisible(false);
                                 });
         if(ungz.isRunning())
@@ -199,7 +222,10 @@ public class GxportDBViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         fileOpen.setGraphic(glyphFont.create(FontAwesome.Glyph.FILES_ALT));
+        fileOutput.setGraphic(glyphFont.create(FontAwesome.Glyph.FILES_ALT));
         //gxportButton.setGraphic(glyphFont.create(FontAwesome.Glyph.UPLOAD));
+        cancelTask.setVisible(false);
+        progressGexportDb.setVisible(false);
     }    
     
 }
