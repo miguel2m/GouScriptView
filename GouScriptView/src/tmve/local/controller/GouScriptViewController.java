@@ -47,6 +47,7 @@ import tmve.local.services.IprtCsv;
  * @author P05144
  */
 public class GouScriptViewController implements Initializable {
+
     private GouScript gouScriptTask;
     private ObservableList<String> rncPossibleSuggestions = FXCollections.observableArrayList();
     private ObservableList<String> vrfPossibleSuggestions = FXCollections.observableArrayList();
@@ -74,7 +75,7 @@ public class GouScriptViewController implements Initializable {
     @FXML
     private Button cargarOutputFolder;
     @FXML
-    private Button cargarGxportFolder; 
+    private Button cargarGxportFolder;
     @FXML
     private Button cargarRNC;
     @FXML
@@ -135,24 +136,23 @@ public class GouScriptViewController implements Initializable {
                this.rncSearchName.setLength(rncSearchName.length()-1);
         }*/
  /* }*/
-        @FXML
+    @FXML
     void onCargarRNC(ActionEvent event) {
         cargarRNC.setDisable(true);
         cargarRNC.setText("Cargando");
         cargarRNC.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
-        AdjnodeCsv adjnodeCsv = new AdjnodeCsv("rnc", false,inputGxportFolder.getAbsolutePath());
+        AdjnodeCsv adjnodeCsv = new AdjnodeCsv("rnc", false, inputGxportFolder.getAbsolutePath());
 
         adjnodeCsv.start();
 
         adjnodeCsv.setOnSucceeded(d -> {
-           
 
             if (!CollectionUtils.isEmpty(adjnodeCsv.getValue())) {
 
                 Platform.runLater(() -> {
                     /*if(!rncPossibleSuggestions.isEmpty())
                         rncPossibleSuggestions.clear();*/
-                    searchRnc.setDisable(false);
+                    //searchRnc.setDisable(false);
                     rncPossibleSuggestions.setAll(adjnodeCsv.getValue());
                     //searchComboboxRNC.getItems().clear();
                     searchComboboxRNC.setItems(rncPossibleSuggestions);
@@ -167,7 +167,7 @@ public class GouScriptViewController implements Initializable {
             cargarRNC.setVisible(false);
         });
     }
-    
+
     @FXML
     void onCargarNodeb(ActionEvent event) {
 
@@ -175,7 +175,7 @@ public class GouScriptViewController implements Initializable {
 
         cargarNodeB.setText("Cargando");
         cargarNodeB.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
-        AdjnodeCsv nodeb = new AdjnodeCsv(searchComboboxRNC.getValue(), true,inputGxportFolder.getAbsolutePath());
+        AdjnodeCsv nodeb = new AdjnodeCsv(searchComboboxRNC.getValue(), true, inputGxportFolder.getAbsolutePath());
         nodeb.start();
         nodeb.setOnSucceeded((e) -> {
             if (!CollectionUtils.isEmpty(nodeb.getValue())) {
@@ -207,13 +207,12 @@ public class GouScriptViewController implements Initializable {
         searchComboboxPORT.setDisable(true);
         textFieldVRF.setDisable(true);
 
-
         cargarSRN.setVisible(true);
         cargarSN.setVisible(true);
         cargarPort.setVisible(true);
         cargarVRF.setVisible(true);
 
-        nodebList.getItems().clear();
+        //nodebList.getItems().clear();
         searchComboboxSRN.getItems().clear();
         searchComboboxSRN.setDisable(true);
         searchComboboxSN.getItems().clear();
@@ -232,10 +231,10 @@ public class GouScriptViewController implements Initializable {
         System.out.println("" + searchComboboxRNC.selectionModelProperty().getValue().getSelectedItem());
         if (textGxportFolder.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR,
-                        " Seleccione el directorio GEXPORT DB ");
+                    " Seleccione el directorio GEXPORT DB ");
 
-                alert.setTitle("Falta directorio GXPORT");
-                alert.showAndWait();
+            alert.setTitle("Falta directorio GXPORT");
+            alert.showAndWait();
         } else {
             if (searchComboboxRNC.selectionModelProperty().getValue().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -323,7 +322,8 @@ public class GouScriptViewController implements Initializable {
                                                     crearGouScript.setVisible(true);
                                                     cancelTaskGouScript.setVisible(false);
 
-                                                    cargarRNC.setVisible(false);
+                                                    cargarRNC.setVisible(true);
+                                                    cargarRNC.setDisable(false);
                                                     searchComboboxRNC.setDisable(true);
                                                     //searchComboboxRNC.getItems().clear();
 
@@ -360,7 +360,7 @@ public class GouScriptViewController implements Initializable {
         cargarSRN.setDisable(true);
         cargarSRN.setText("Cargando");
         cargarSRN.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
-        IprtCsv iprtCsvSRN = new IprtCsv(searchComboboxRNC.getValue(), true, false, false, false,inputGxportFolder.getAbsolutePath());
+        IprtCsv iprtCsvSRN = new IprtCsv(searchComboboxRNC.getValue(), true, false, false, false, inputGxportFolder.getAbsolutePath());
         iprtCsvSRN.start();
         iprtCsvSRN.setOnSucceeded((a) -> {
             //srnPossibleSuggestions.clear();
@@ -384,7 +384,6 @@ public class GouScriptViewController implements Initializable {
         });
 
     }
-    
 
     @FXML
     void onSearchComboboxSRN(ActionEvent event) {
@@ -396,13 +395,14 @@ public class GouScriptViewController implements Initializable {
         cargarPort.setVisible(true);
 
     }
+
     @FXML
     void onCargarSN(ActionEvent event) {
         cargarSN.setDisable(true);
         cargarSN.setText("Cargando");
         cargarSN.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
         if (!searchComboboxSRN.selectionModelProperty().getValue().isEmpty()) {
-            IprtCsv iprtCsvSN = new IprtCsv(searchComboboxRNC.getValue(), false, true, false, false,inputGxportFolder.getAbsolutePath());
+            IprtCsv iprtCsvSN = new IprtCsv(searchComboboxRNC.getValue(), false, true, false, false, inputGxportFolder.getAbsolutePath());
             iprtCsvSN.setSrn(Short.parseShort(searchComboboxSRN.getValue()));
             iprtCsvSN.start();
             iprtCsvSN.setOnSucceeded((a) -> {
@@ -410,7 +410,7 @@ public class GouScriptViewController implements Initializable {
                 if (!CollectionUtils.isEmpty(iprtCsvSN.getValue())) {
                     Platform.runLater(() -> {
                         searchComboboxSN.setDisable(false);
-                         snPossibleSuggestions.setAll(iprtCsvSN.getValue());
+                        snPossibleSuggestions.setAll(iprtCsvSN.getValue());
                         /*if (!searchComboboxSN.getItems().isEmpty()) {
                             searchComboboxSN.getItems().clear();
                         }*/
@@ -439,11 +439,13 @@ public class GouScriptViewController implements Initializable {
             cargarSN.setGraphic(null);
         }
     }
+
     @FXML
     void onSearchComboboxSN(ActionEvent event) {
         searchComboboxPORT.setDisable(true);
         cargarPort.setVisible(true);
     }
+
     @FXML
     void onCargarPort(ActionEvent event) {
         cargarPort.setDisable(true);
@@ -451,7 +453,7 @@ public class GouScriptViewController implements Initializable {
         cargarPort.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
         if (!searchComboboxSRN.selectionModelProperty().getValue().isEmpty()
                 && !searchComboboxSN.selectionModelProperty().getValue().isEmpty()) {
-            IprtCsv iprtCsvPORT = new IprtCsv(searchComboboxRNC.getValue(), false, false, true, false,inputGxportFolder.getAbsolutePath());
+            IprtCsv iprtCsvPORT = new IprtCsv(searchComboboxRNC.getValue(), false, false, true, false, inputGxportFolder.getAbsolutePath());
             iprtCsvPORT.setSrn(Short.parseShort(searchComboboxSRN.getValue()));
             iprtCsvPORT.setSn(Short.parseShort(searchComboboxSN.getValue()));
             iprtCsvPORT.start();
@@ -460,7 +462,7 @@ public class GouScriptViewController implements Initializable {
                 if (!CollectionUtils.isEmpty(iprtCsvPORT.getValue())) {
                     Platform.runLater(() -> {
                         searchComboboxPORT.setDisable(false);
-                         portPossibleSuggestions.setAll(iprtCsvPORT.getValue());
+                        portPossibleSuggestions.setAll(iprtCsvPORT.getValue());
                         /*if (!searchComboboxPORT.getItems().isEmpty()) {
                             searchComboboxPORT.getItems().clear();
                         }*/
@@ -495,14 +497,14 @@ public class GouScriptViewController implements Initializable {
         cargarVRF.setDisable(true);
         cargarVRF.setText("Cargando");
         cargarVRF.setGraphic(glyphFont.create(FontAwesome.Glyph.SPINNER));
-        IprtCsv iprtCsvVRF = new IprtCsv(searchComboboxRNC.getValue(), false, false, false, true,inputGxportFolder.getAbsolutePath());
+        IprtCsv iprtCsvVRF = new IprtCsv(searchComboboxRNC.getValue(), false, false, false, true, inputGxportFolder.getAbsolutePath());
         iprtCsvVRF.start();
         iprtCsvVRF.setOnSucceeded((a) -> {
 
             if (!CollectionUtils.isEmpty(iprtCsvVRF.getValue())) {
                 Platform.runLater(() -> {
 
-                    if(!vrfPossibleSuggestions.isEmpty()){
+                    if (!vrfPossibleSuggestions.isEmpty()) {
                         vrfPossibleSuggestions.clear();
                     }
                     vrfPossibleSuggestions.addAll(iprtCsvVRF.getValue());
@@ -519,6 +521,7 @@ public class GouScriptViewController implements Initializable {
 
         });
     }
+
     @FXML
     void onCancelTaskGouScript(ActionEvent event) {
 
@@ -528,11 +531,12 @@ public class GouScriptViewController implements Initializable {
             crearGouScript.setVisible(true);
             cancelTaskGouScript.setVisible(false);
             progressIndicator.setVisible(false);
-            
+
             cargarRNC.setVisible(true);
+            cargarRNC.setDisable(false);
             searchComboboxRNC.setDisable(true);
             //searchComboboxRNC.getItems().clear();
-            
+
             nodebList.setDisable(true);
             //nodebList.getItems().clear();
             //searchComboboxSRN.getItems().clear();
@@ -549,12 +553,13 @@ public class GouScriptViewController implements Initializable {
             gouScriptTask.cancel();
         }
     }
+
     @FXML
     void onCargarGxportFolder(ActionEvent event) {
         DirectoryChooser direcotryChooser = new DirectoryChooser();
         direcotryChooser.setTitle("Selecciona carpeta GXPORT (CSV)");
-        Stage stage = (Stage)labelForm.getScene().getWindow();
-        inputGxportFolder= direcotryChooser.showDialog(stage);
+        Stage stage = (Stage) labelForm.getScene().getWindow();
+        inputGxportFolder = direcotryChooser.showDialog(stage);
         if (inputGxportFolder != null) {
             Path file = Paths.get(inputGxportFolder.getAbsolutePath() + File.separator + "ADJNODE.csv");
             Path file2 = Paths.get(inputGxportFolder.getAbsolutePath() + File.separator + "IPRT.csv");
@@ -564,7 +569,7 @@ public class GouScriptViewController implements Initializable {
                     textGxportFolder.setText(inputGxportFolder.getAbsolutePath());
                     cargarRNC.setVisible(true);
                     cargarRNC.setDisable(false);
-                    searchRnc.setDisable(true);
+                    //searchRnc.setDisable(true);
                     //searchComboboxRNC.setDisable(true);
                 });
             } else {
@@ -580,27 +585,26 @@ public class GouScriptViewController implements Initializable {
 
         }
     }
+
     @FXML
     void onCargarOutputFolder(ActionEvent event) {
         DirectoryChooser direcotryChooser = new DirectoryChooser();
         direcotryChooser.setTitle("Seleccione carpeta de descarga");
-        Stage stage = (Stage)labelForm.getScene().getWindow();
-        inputOutputFolder= direcotryChooser.showDialog(stage);
-        if(inputOutputFolder!=null)
+        Stage stage = (Stage) labelForm.getScene().getWindow();
+        inputOutputFolder = direcotryChooser.showDialog(stage);
+        if (inputOutputFolder != null) {
             textOutputFolder.setText(inputOutputFolder.getAbsolutePath());
+        }
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarOutputFolder.setGraphic(glyphFont.create(FontAwesome.Glyph.FILES_ALT));
         cargarGxportFolder.setGraphic(glyphFont.create(FontAwesome.Glyph.FILES_ALT));
-        
-        
+
         cargarRNC.setVisible(false);
         searchComboboxRNC.setDisable(true);
-        
-        
-        
+
         cargarNodeB.setVisible(false);
         nodebList.setDisable(true);
 
@@ -617,10 +621,8 @@ public class GouScriptViewController implements Initializable {
 
         gouScriptProgress.setVisible(false);
         progressIndicator.setVisible(false);
-        
-        cancelTaskGouScript.setVisible(false);
 
-        
+        cancelTaskGouScript.setVisible(false);
 
     }
 

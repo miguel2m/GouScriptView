@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tmve.local.controller.GxportDBViewController">
    <children>
-      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <GridPane alignment="CENTER" hgap="10.0" vgap="15.0">
               <columnConstraints>
@@ -37,7 +37,7 @@
                         <Button fx:id="cancelTask" mnemonicParsing="false" onAction="#onCancelTask" text="Cancelar" textFill="#ee0303" />
                      </children>
                   </HBox>
-                  <Label fx:id="progresTaskIndicator" textFill="#53bf10" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="progresTaskIndicator" textFill="#2b6507" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="Carpeta Destino" GridPane.rowIndex="1" />
                   <Button fx:id="fileOpen" mnemonicParsing="false" onAction="#onFileOpen" GridPane.columnIndex="2" />
                   <Button fx:id="fileOutput" mnemonicParsing="false" onAction="#onFileOutput" GridPane.columnIndex="2" GridPane.rowIndex="1" />

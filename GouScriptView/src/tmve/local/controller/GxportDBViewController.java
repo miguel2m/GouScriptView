@@ -97,7 +97,7 @@ public class GxportDBViewController implements Initializable {
         Stage stage = (Stage)labelGxportInput.getScene().getWindow();
         inputDirectory = direcotryChooser.showDialog(stage);
         if(inputDirectory!=null)
-            textOpenFile.setText(inputDirectory.getAbsolutePath());
+            textOpenFile.setText(inputDirectory.getPath());
     }
     
     /**
@@ -113,7 +113,7 @@ public class GxportDBViewController implements Initializable {
             if (!textOutputFile.getText().isEmpty()) {
 
                 //Is path is readable
-                Path file = Paths.get(textOpenFile.getText());
+                Path file = Paths.get(inputDirectory.getAbsolutePath());
                 if (Files.isReadable(file)) {
                     Platform.runLater(() -> {
 
@@ -208,11 +208,15 @@ public class GxportDBViewController implements Initializable {
                                     textOutputFile.clear();
                                     //logGexportIndicator.setVisible(false);
                                 });
-        if(ungz.isRunning())
-                ungz.cancel();
-                
-        if(gexportParser.isRunning())
-            gexportParser.cancel();
+        if (ungz != null) {
+            if(ungz.isRunning())
+                    ungz.cancel();
+        }
+        if (gexportParser != null) {
+            if (gexportParser.isRunning()) {
+                gexportParser.cancel();
+            }
+        }
     }
     GlyphFont glyphFont = GlyphFontRegistry.font("FontAwesome");
     /**

@@ -52,9 +52,9 @@ private String output;
     public int createGouScript() {
        int out =-1;
         try{ //Este es el script 7z e -o../ *.gz -aos
-                File directory = new File("."+File.separator+"output");
+               /* File directory = new File("."+File.separator+"output");
                 if (!directory.exists())
-                    directory.mkdir();
+                    directory.mkdir();*/
                 List<String> commands = new ArrayList<>();
                     commands.add("java");
                     commands.add("-Xms128m");

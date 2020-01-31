@@ -16,7 +16,7 @@
 
 <AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tmve.local.controller.GouScriptViewController">
    <children>
-      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <GridPane fx:id="gouScriptGridPanel" alignment="TOP_CENTER" hgap="10.0" vgap="15.0">
               <columnConstraints>
@@ -86,7 +86,7 @@
                   <Button fx:id="cargarVRF" mnemonicParsing="false" onAction="#onCargarVRF" text="Cargar" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                   <Label fx:id="labelForm" text="GEXPORT (Carpeta CSV)" />
                   <Button fx:id="cargarGxportFolder" mnemonicParsing="false" onAction="#onCargarGxportFolder" GridPane.columnIndex="2" />
-                  <Label text="Output (Folder)" GridPane.rowIndex="7" />
+                  <Label text="Carpeta Destino" GridPane.rowIndex="7" />
                   <HBox GridPane.columnIndex="1">
                      <children>
                         <TextField fx:id="textGxportFolder" editable="false" promptText="Gexport DB (Folder)" />
