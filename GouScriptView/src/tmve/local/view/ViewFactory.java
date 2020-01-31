@@ -8,6 +8,7 @@ package tmve.local.view;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -41,11 +42,11 @@ public class ViewFactory {
    
     
     
-    public void showMainWindown(){
+    public void showMainWindown(HostServices hostServices){
         //System.out.println("MAIN WINDOWNS");
         MainController controller = new MainController(gouScript, this, "MainView.fxml");
         initializateMainStage(controller);
-        
+        controller.setHostServices(hostServices);
     }
     
     public void showHelpWindown(){

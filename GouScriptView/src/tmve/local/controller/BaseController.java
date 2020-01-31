@@ -5,6 +5,7 @@
  */
 package tmve.local.controller;
 
+import javafx.application.HostServices;
 import tmve.local.main.GouScript;
 import tmve.local.view.ViewFactory;
 
@@ -17,7 +18,7 @@ public abstract class BaseController {
     protected GouScript gouScript;
     protected  ViewFactory viewFactory;
     protected  String fxmlName;
-
+    protected HostServices hostServices ;
     public BaseController(GouScript gouScript, ViewFactory viewFactory, String fxmlName) {
         this.gouScript = gouScript;
         this.viewFactory = viewFactory;
@@ -30,6 +31,14 @@ public abstract class BaseController {
 
     public void setFxmlName(String fxmlName) {
         this.fxmlName = fxmlName;
+    }
+
+    public HostServices getHostServices() {
+        return hostServices;
+    }
+
+    public void setHostServices(HostServices hostServices) {
+        this.hostServices = hostServices;
     }
     
     

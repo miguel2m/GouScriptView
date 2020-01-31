@@ -12,12 +12,18 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.FlowPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tmve.local.main.GouScript;
 import tmve.local.view.ViewFactory;
@@ -58,6 +64,7 @@ public class MainController extends BaseController implements Initializable {
     @FXML
     private MenuItem helpItem;
     
+    final Hyperlink link = new Hyperlink("https://github.com/miguel2m/GouScriptView");
 
     /**
      * METODO que dirije a la ventana de ayuda
@@ -65,7 +72,20 @@ public class MainController extends BaseController implements Initializable {
      */
     @FXML
     void onHelpItem(ActionEvent event) {
-        viewFactory.showHelpWindown();
+        //viewFactory.showHelpWindown();
+        FlowPane fp = new FlowPane();
+        Label lbl = new Label("Toda la ayuda la encontrarás aquí: ");
+        
+        fp.getChildren().addAll(lbl, link);
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                        "Info");
+                alert.initOwner(gxportDbTab.getTabPane().getScene().getWindow());
+                alert.setTitle("Info");
+                alert.getDialogPane().setContent(fp);
+                alert.getDialogPane().setHeaderText("Información");
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.showAndWait();
     }
     
     
@@ -84,7 +104,14 @@ public class MainController extends BaseController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        
-        
+            link.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent t) {
+                    getHostServices().showDocument(link.getText());
+                    //getHostServices().showDocument(link.getText());
+                }
+            });
             //viewFactory.addTab(gxportDbTab, "GxportDBView.fxml");
             
             
