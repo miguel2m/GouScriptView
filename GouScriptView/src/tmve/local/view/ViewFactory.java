@@ -106,35 +106,92 @@ public class ViewFactory {
             Logger.getLogger(ViewFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void closePrimaryStage(Stage stageToClose){
-        
-        /*Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.initStyle(StageStyle.DECORATED);
-        alerta.initModality(Modality.APPLICATION_MODAL);
-        alerta.initOwner(stageToClose);
-        
-        alerta.getDialogPane().setHeaderText("¿Desea salir?");
-        alerta.showAndWait()
-                .filter(response -> response == ButtonType.OK)
-                .ifPresent(response -> {
-                    if (GouScriptViewController.gouScriptTask != null) {
-                        if (GouScriptViewController.gouScriptTask.isRunning()) {
+
+    public void closePrimaryStage(Stage stageToClose) {
+        //Si no hay ningun proceso corriendo se puede cerrar la ventana
+        if ((GouScriptViewController.gouScriptTask == null)
+                && (GxportDBViewController.ungz == null)
+                && (GxportDBViewController.gexportParser == null)) {
+            stageToClose.close();
+        }
+        //Si gouScriptTask esta corriendo se pregunta si se desea cerrar
+        if (GouScriptViewController.gouScriptTask != null) {
+            if (GouScriptViewController.gouScriptTask.isRunning()) {
+                String msg = " El proceso GOUSCRIPT se está ejecutando...";
+                Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+                alerta.initStyle(StageStyle.DECORATED);
+                alerta.initModality(Modality.APPLICATION_MODAL);
+                alerta.initOwner(stageToClose);
+                alerta.getDialogPane().setContentText(msg);
+                alerta.getDialogPane().setHeaderText("¿Desea salir?");
+                alerta.showAndWait()
+                        .filter(response -> response == ButtonType.OK)
+                        .ifPresent(response -> {
+                            if (GxportDBViewController.ungz != null) {
+                                if (GxportDBViewController.ungz.isRunning()) {
+                                    GxportDBViewController.ungz.cancel();
+                                }
+                            }
+                            if (GxportDBViewController.gexportParser != null) {
+                                if (GxportDBViewController.gexportParser.isRunning()) {
+                                    GxportDBViewController.gexportParser.cancel();
+                                }
+                            }
                             GouScriptViewController.gouScriptTask.cancel();
-                        }
-                    }
-                    if (GxportDBViewController.ungz != null) {
-                        if (GxportDBViewController.ungz.isRunning()) {
+                            stageToClose.close();
+                        });
+
+            }
+        }
+        //Si ungz esta corriendo se pregunta si se desea cerrar
+        if (GxportDBViewController.ungz != null) {
+            if (GxportDBViewController.ungz.isRunning()) {
+                String msg = " El proceso para EXTRAER los archivos XML se está ejecutando...";
+                Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+                alerta.initStyle(StageStyle.DECORATED);
+                alerta.initModality(Modality.APPLICATION_MODAL);
+                alerta.initOwner(stageToClose);
+                alerta.getDialogPane().setContentText(msg);
+                alerta.getDialogPane().setHeaderText("¿Desea salir?");
+                alerta.showAndWait()
+                        .filter(response -> response == ButtonType.OK)
+                        .ifPresent(response -> {
+                            if (GouScriptViewController.gouScriptTask != null) {
+                                if (GouScriptViewController.gouScriptTask.isRunning()) {
+                                    GouScriptViewController.gouScriptTask.cancel();
+                                }
+                            }
                             GxportDBViewController.ungz.cancel();
-                        }
-                    }
-                    if (GxportDBViewController.gexportParser != null) {
-                        if (GxportDBViewController.gexportParser.isRunning()) {
+                            stageToClose.close();
+                        });
+
+            }
+        }
+        //Si gexportParser esta corriendo se pregunta si se desea cerrar
+        if (GxportDBViewController.gexportParser != null) {
+            if (GxportDBViewController.gexportParser.isRunning()) {
+                String msg = " El proceso para convertir XML -> CSV se está ejecutando...";
+                Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+                alerta.initStyle(StageStyle.DECORATED);
+                alerta.initModality(Modality.APPLICATION_MODAL);
+                alerta.initOwner(stageToClose);
+                alerta.getDialogPane().setContentText(msg);
+                alerta.getDialogPane().setHeaderText("¿Desea salir?");
+                alerta.showAndWait()
+                        .filter(response -> response == ButtonType.OK)
+                        .ifPresent(response -> {
+                            if (GouScriptViewController.gouScriptTask != null) {
+                                if (GouScriptViewController.gouScriptTask.isRunning()) {
+                                    GouScriptViewController.gouScriptTask.cancel();
+                                }
+                            }
                             GxportDBViewController.gexportParser.cancel();
-                        }
-                    }
-                    stageToClose.close();
-                });*/
+                            stageToClose.close();
+                        });
+
+            }
+        }
+        
     }
     
     public void closeStage(Stage stageToClose){
