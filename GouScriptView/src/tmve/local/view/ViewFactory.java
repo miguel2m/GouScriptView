@@ -141,6 +141,8 @@ public class ViewFactory {
                             stageToClose.close();
                         });
 
+            }else{
+                stageToClose.close();
             }
         }
         //Si ungz esta corriendo se pregunta si se desea cerrar
@@ -165,6 +167,8 @@ public class ViewFactory {
                             stageToClose.close();
                         });
 
+            }else{
+                stageToClose.close();
             }
         }
         //Si gexportParser esta corriendo se pregunta si se desea cerrar
@@ -189,6 +193,8 @@ public class ViewFactory {
                             stageToClose.close();
                         });
 
+            }else{
+                stageToClose.close();
             }
         }
         
