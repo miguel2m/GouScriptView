@@ -26,6 +26,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.commons.collections4.CollectionUtils;
 import org.controlsfx.control.CheckComboBox;
@@ -48,7 +49,7 @@ import tmve.local.services.IprtCsv;
  */
 public class GouScriptViewController implements Initializable {
 
-    private GouScript gouScriptTask;
+    public static GouScript gouScriptTask;
     private ObservableList<String> rncPossibleSuggestions = FXCollections.observableArrayList();
     private ObservableList<String> vrfPossibleSuggestions = FXCollections.observableArrayList();
     private ObservableList<String> srnPossibleSuggestions = FXCollections.observableArrayList();
@@ -232,22 +233,25 @@ public class GouScriptViewController implements Initializable {
         if (textGxportFolder.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR,
                     " Seleccione el directorio GEXPORT DB ");
-
+            alert.initOwner(progressIndicator.getScene().getWindow());
+            alert.initModality(Modality.APPLICATION_MODAL);
             alert.setTitle("Falta directorio GXPORT");
             alert.showAndWait();
         } else {
             if (searchComboboxRNC.selectionModelProperty().getValue().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR,
                         " Seleccione la RNC ");
-
+                alert.initOwner(progressIndicator.getScene().getWindow());
                 alert.setTitle("Seleccione la RNC");
+                alert.initModality(Modality.APPLICATION_MODAL);
                 alert.showAndWait();
 
             } else {
                 if (nodebList.getCheckModel().getCheckedItems().isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR,
                             "Seleccione la lista de NodeB ");
-
+                    alert.initOwner(progressIndicator.getScene().getWindow());
+                    alert.initModality(Modality.APPLICATION_MODAL);
                     alert.setTitle("Seleccione la lista de NODB");
                     alert.showAndWait();
 
@@ -255,7 +259,8 @@ public class GouScriptViewController implements Initializable {
                     if (searchComboboxSRN.selectionModelProperty().getValue().isEmpty()) {
                         Alert alert = new Alert(Alert.AlertType.ERROR,
                                 "Seleccione el SRN ");
-
+                        alert.initOwner(progressIndicator.getScene().getWindow());
+                        alert.initModality(Modality.APPLICATION_MODAL);
                         alert.setTitle("Seleccione el SRN ");
                         alert.showAndWait();
 
@@ -263,7 +268,8 @@ public class GouScriptViewController implements Initializable {
                         if (searchComboboxSN.selectionModelProperty().getValue().isEmpty()) {
                             Alert alert = new Alert(Alert.AlertType.ERROR,
                                     "Seleccione el SN ");
-
+                            alert.initOwner(progressIndicator.getScene().getWindow());
+                            alert.initModality(Modality.APPLICATION_MODAL);
                             alert.setTitle("Seleccione el SN ");
                             alert.showAndWait();
 
@@ -271,7 +277,8 @@ public class GouScriptViewController implements Initializable {
                             if (searchComboboxPORT.selectionModelProperty().getValue().isEmpty()) {
                                 Alert alert = new Alert(Alert.AlertType.ERROR,
                                         "Seleccione el Puerto ");
-
+                                alert.initOwner(progressIndicator.getScene().getWindow());
+                                alert.initModality(Modality.APPLICATION_MODAL);
                                 alert.setTitle("Seleccione el Puerto ");
                                 alert.showAndWait();
 
@@ -279,7 +286,8 @@ public class GouScriptViewController implements Initializable {
                                 if (textFieldVRF.getText().isEmpty()) {
                                     Alert alert = new Alert(Alert.AlertType.ERROR,
                                             "Seleccione la VRF IP ");
-
+                                    alert.initOwner(progressIndicator.getScene().getWindow());
+                                    alert.initModality(Modality.APPLICATION_MODAL);
                                     alert.setTitle("Seleccione la VRF IP  ");
                                     alert.showAndWait();
 
@@ -287,7 +295,8 @@ public class GouScriptViewController implements Initializable {
                                     if (!ValidatorModel.isValidIp(textFieldVRF.getText())) {
                                         Alert alert = new Alert(Alert.AlertType.ERROR,
                                                 "Por favor ingrese una direccion de ip valida ");
-
+                                        alert.initOwner(progressIndicator.getScene().getWindow());
+                                        alert.initModality(Modality.APPLICATION_MODAL);
                                         alert.setTitle("IP invalida  ");
                                         alert.showAndWait();
 
@@ -295,7 +304,8 @@ public class GouScriptViewController implements Initializable {
                                         if (textOutputFolder.getText().isEmpty()) {
                                             Alert alert = new Alert(Alert.AlertType.ERROR,
                                                     "Por favor ingrese el directorio de descarga ");
-
+                                            alert.initOwner(progressIndicator.getScene().getWindow());
+                                            alert.initModality(Modality.APPLICATION_MODAL);
                                             alert.setTitle("Seleccione directorio de descarga ");
                                             alert.showAndWait();
                                         } else {

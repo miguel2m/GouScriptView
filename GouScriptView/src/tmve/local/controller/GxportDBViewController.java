@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.controlsfx.glyphfont.FontAwesome;
@@ -38,8 +39,8 @@ import tmve.local.services.UnGzip;
 public class GxportDBViewController implements Initializable {
     private File inputDirectory;
     private File outputDirectory;
-    private  UnGzip ungz;
-    private  GexportParser gexportParser;
+    public static UnGzip ungz;
+    public static  GexportParser gexportParser;
     
     /**
      * Atributo para importar la base de datos (Import GXPORT)
@@ -93,7 +94,7 @@ public class GxportDBViewController implements Initializable {
     @FXML
     void onFileOpen(ActionEvent event) {
         DirectoryChooser direcotryChooser = new DirectoryChooser();
-        direcotryChooser.setTitle("Import GXPORT Data Base");
+        direcotryChooser.setTitle("Importar carpeta GXPORT.xm.gz");
         Stage stage = (Stage)labelGxportInput.getScene().getWindow();
         inputDirectory = direcotryChooser.showDialog(stage);
         if(inputDirectory!=null)
@@ -167,14 +168,16 @@ public class GxportDBViewController implements Initializable {
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR,
                         "Por favor ingrese un direcctorio DESTINO válido ");
-
+                alert.initOwner(labelGxportInput.getScene().getWindow());
+                alert.initModality(Modality.APPLICATION_MODAL);
                 alert.setTitle("Ingresar un directorio DESTINO válido ");
                 alert.showAndWait();
             }
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR,
                     "Por favor ingrese un direcctorio GXPORT válido ");
-
+            alert.initOwner(labelGxportInput.getScene().getWindow());
+            alert.initModality(Modality.APPLICATION_MODAL);
             alert.setTitle("Ingresar un directorio GXPORT válido ");
             alert.showAndWait();
         }
@@ -184,7 +187,7 @@ public class GxportDBViewController implements Initializable {
     @FXML
     void onFileOutput(ActionEvent event) {
         DirectoryChooser direcotryChooser = new DirectoryChooser();
-        direcotryChooser.setTitle("Import GXPORT Data Base");
+        direcotryChooser.setTitle("Seleccione Carpeta destino");
         Stage stage = (Stage)labelGxportInput.getScene().getWindow();
         outputDirectory = direcotryChooser.showDialog(stage);
         if(outputDirectory!=null)

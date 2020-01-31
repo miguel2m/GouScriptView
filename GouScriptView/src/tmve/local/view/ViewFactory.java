@@ -11,11 +11,17 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import tmve.local.controller.BaseController;
+import tmve.local.controller.GouScriptViewController;
+import tmve.local.controller.GxportDBViewController;
 import tmve.local.controller.HelpController;
 import tmve.local.controller.MainController;
 import tmve.local.main.GouScript;
@@ -38,7 +44,7 @@ public class ViewFactory {
     public void showMainWindown(){
         //System.out.println("MAIN WINDOWNS");
         MainController controller = new MainController(gouScript, this, "MainView.fxml");
-        initializateStage(controller);
+        initializateMainStage(controller);
         
     }
     
@@ -64,8 +70,31 @@ public class ViewFactory {
         stage.setTitle("Avila RAN v2.0");
         stage.getIcons().add(new Image(ViewFactory.class.getResourceAsStream("assets/tower.png")));
         stage.show();
-    
+        
     }
+    
+    private void initializateMainStage(BaseController controller ){
+        FXMLLoader fxmll = new FXMLLoader(getClass().getResource(controller.getFxmlName()));
+        fxmll.setController(controller);
+        Parent parent = null;
+        try{
+            parent = fxmll.load();
+        }catch(IOException io){
+            io.printStackTrace();
+        } 
+        
+        Scene scene = new Scene(parent);
+        Stage  stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Avila RAN v2.0");
+        stage.getIcons().add(new Image(ViewFactory.class.getResourceAsStream("assets/tower.png")));
+        stage.show();
+        stage.setOnCloseRequest((event) -> {
+            event.consume();
+            closePrimaryStage(stage);
+        });
+    }
+    
     
     
     public void addTab(Tab tab, String view){
@@ -78,9 +107,38 @@ public class ViewFactory {
         }
     }
     
+    public void closePrimaryStage(Stage stageToClose){
+        
+        /*Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.initStyle(StageStyle.DECORATED);
+        alerta.initModality(Modality.APPLICATION_MODAL);
+        alerta.initOwner(stageToClose);
+        
+        alerta.getDialogPane().setHeaderText("¿Desea salir?");
+        alerta.showAndWait()
+                .filter(response -> response == ButtonType.OK)
+                .ifPresent(response -> {
+                    if (GouScriptViewController.gouScriptTask != null) {
+                        if (GouScriptViewController.gouScriptTask.isRunning()) {
+                            GouScriptViewController.gouScriptTask.cancel();
+                        }
+                    }
+                    if (GxportDBViewController.ungz != null) {
+                        if (GxportDBViewController.ungz.isRunning()) {
+                            GxportDBViewController.ungz.cancel();
+                        }
+                    }
+                    if (GxportDBViewController.gexportParser != null) {
+                        if (GxportDBViewController.gexportParser.isRunning()) {
+                            GxportDBViewController.gexportParser.cancel();
+                        }
+                    }
+                    stageToClose.close();
+                });*/
+    }
+    
     public void closeStage(Stage stageToClose){
         stageToClose.close();
     }
-    
     
 }

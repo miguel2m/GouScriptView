@@ -11,14 +11,10 @@ import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
@@ -79,17 +75,16 @@ public class MainController extends BaseController implements Initializable {
      */
     @FXML
     void onExit(ActionEvent event) {
-        Stage stage = (Stage)gxportDbTab.getTabPane().getScene().getWindow();
-        viewFactory.closeStage(stage);  
-       
         
+       Stage stage = (Stage)gxportDbTab.getTabPane().getScene().getWindow();
+        
+        viewFactory.closePrimaryStage(stage);  
     }
-    
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      
+       
+        
             //viewFactory.addTab(gxportDbTab, "GxportDBView.fxml");
             
             
