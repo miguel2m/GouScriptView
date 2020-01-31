@@ -9,7 +9,7 @@ GouScriptView-Interface
 
 | CODIGO | CLASE | CONCEPTO |
 |:------:|------|--------------------------------------------------------------------------------------|
-| 200 |SUCESSFUL| EL SCRIPT DEL NODEB SE CREÓ EXITOSAMENTE |
+| 200 |SUCCESSFUL| EL SCRIPT DEL NODEB SE CREÓ EXITOSAMENTE |
 | 400 |ERROR | EL NODEB ES ATM |
 | 401 |WARNING | EN LA TABLA IPRT, EL CAMPO DSTIP (VRF) NO ESTA ASOCIADO AL NODEB |
 | 402 |ERROR | EL NODEB NO ESTA CARGADA A LA BD |
