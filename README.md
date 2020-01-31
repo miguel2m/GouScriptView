@@ -1,6 +1,6 @@
 # Avila RAN v2
 GouScriptView-Interface
-* Download Avila RAN v2 (avilaran-setup.zip)
+* Descarga Avila RAN v2 (avilaran-setup.zip)
 [AQUI](https://github.com/miguel2m/GouScriptView/blob/master/GouScriptView/AvilaRANv2-dist/AvilaRan-setup.zip)
 * Descomprimir avilaran-setup.zip:
   Avila RAN se instala en la carpeta Users/appdata/local (No necesita de permisos de administrador)
