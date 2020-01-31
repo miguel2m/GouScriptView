@@ -20,4 +20,4 @@ GouScriptView-Interface
 | 501 | ERROR EN EXPORTAR EL ARCHIVO EXCEL |
 | 502 | ERROR EN GENERAL |
 
-* Recuerda: Una vez creado los script correspondientes, echa un vistaso al log del script creado segun la RNC correspondiente.
+* Recuerda: Una vez creado los script correspondientes, verifica el log del script creado segun la RNC correspondiente.
