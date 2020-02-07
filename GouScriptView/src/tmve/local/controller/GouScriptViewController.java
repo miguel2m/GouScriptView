@@ -213,12 +213,12 @@ public class GouScriptViewController implements Initializable {
         cargarPort.setVisible(true);
         cargarVRF.setVisible(true);
 
-        //nodebList.getItems().clear();
-        searchComboboxSRN.getItems().clear();
+        nodebList.getItems().clear();
+        //searchComboboxSRN.getItems().clear();
         searchComboboxSRN.setDisable(true);
-        searchComboboxSN.getItems().clear();
+        //searchComboboxSN.getItems().clear();
         searchComboboxSN.setDisable(true);
-        searchComboboxPORT.getItems().clear();
+        //searchComboboxPORT.getItems().clear();
         searchComboboxPORT.setDisable(true);
         vrfPossibleSuggestions.clear();
         textFieldVRF.clear();
@@ -340,7 +340,7 @@ public class GouScriptViewController implements Initializable {
                                                     //searchComboboxRNC.getItems().clear();
                                                     searchComboboxRNC.setDisable(true);
                                                     nodebList.setDisable(true);
-                                                    //nodebList.getItems().clear();
+                                                    nodebList.getItems().clear();
                                                     //searchComboboxSRN.getItems().clear();
                                                     searchComboboxSRN.setDisable(true);
                                                     //searchComboboxSN.getItems().clear();
@@ -548,7 +548,8 @@ public class GouScriptViewController implements Initializable {
             //searchComboboxRNC.getItems().clear();
 
             nodebList.setDisable(true);
-            //nodebList.getItems().clear();
+            nodebList.getItems().clear();
+           
             //searchComboboxSRN.getItems().clear();
             searchComboboxSRN.setDisable(true);
             //searchComboboxSN.getItems().clear();

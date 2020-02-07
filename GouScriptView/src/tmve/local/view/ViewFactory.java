@@ -91,13 +91,18 @@ public class ViewFactory {
         stage.getIcons().add(new Image(ViewFactory.class.getResourceAsStream("assets/tower.png")));
         stage.show();
         stage.setOnCloseRequest((event) -> {
-            event.consume();
+            //event.consume();
             closePrimaryStage(stage);
         });
     }
     
     
-    
+    /**
+     * AGREGA UN NUEVO TAB A LA VENTANA MAIN
+     * @deprecated Se agrega directo del fxml
+     * @param tab
+     * @param view 
+     */
     public void addTab(Tab tab, String view){
         FXMLLoader loader = new FXMLLoader();
         try {
@@ -119,7 +124,7 @@ public class ViewFactory {
         if (GouScriptViewController.gouScriptTask != null) {
             if (GouScriptViewController.gouScriptTask.isRunning()) {
                 String msg = " El proceso GOUSCRIPT se está ejecutando...";
-                Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+                /*Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
                 alerta.initStyle(StageStyle.DECORATED);
                 alerta.initModality(Modality.APPLICATION_MODAL);
                 alerta.initOwner(stageToClose);
@@ -127,7 +132,7 @@ public class ViewFactory {
                 alerta.getDialogPane().setHeaderText("¿Desea salir?");
                 alerta.showAndWait()
                         .filter(response -> response == ButtonType.OK)
-                        .ifPresent(response -> {
+                        .ifPresent(response -> {*/
                             if (GxportDBViewController.ungz != null) {
                                 if (GxportDBViewController.ungz.isRunning()) {
                                     GxportDBViewController.ungz.cancel();
@@ -140,7 +145,7 @@ public class ViewFactory {
                             }
                             GouScriptViewController.gouScriptTask.cancel();
                             stageToClose.close();
-                        });
+               /*         });*/
 
             }else{
                 stageToClose.close();
@@ -150,7 +155,7 @@ public class ViewFactory {
         if (GxportDBViewController.ungz != null) {
             if (GxportDBViewController.ungz.isRunning()) {
                 String msg = " El proceso para EXTRAER los archivos XML se está ejecutando...";
-                Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+                /*Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
                 alerta.initStyle(StageStyle.DECORATED);
                 alerta.initModality(Modality.APPLICATION_MODAL);
                 alerta.initOwner(stageToClose);
@@ -158,7 +163,7 @@ public class ViewFactory {
                 alerta.getDialogPane().setHeaderText("¿Desea salir?");
                 alerta.showAndWait()
                         .filter(response -> response == ButtonType.OK)
-                        .ifPresent(response -> {
+                        .ifPresent(response -> {*/
                             if (GouScriptViewController.gouScriptTask != null) {
                                 if (GouScriptViewController.gouScriptTask.isRunning()) {
                                     GouScriptViewController.gouScriptTask.cancel();
@@ -166,7 +171,7 @@ public class ViewFactory {
                             }
                             GxportDBViewController.ungz.cancel();
                             stageToClose.close();
-                        });
+             /*           });*/
 
             }else{
                 stageToClose.close();
@@ -176,7 +181,7 @@ public class ViewFactory {
         if (GxportDBViewController.gexportParser != null) {
             if (GxportDBViewController.gexportParser.isRunning()) {
                 String msg = " El proceso para convertir XML -> CSV se está ejecutando...";
-                Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+                /*Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
                 alerta.initStyle(StageStyle.DECORATED);
                 alerta.initModality(Modality.APPLICATION_MODAL);
                 alerta.initOwner(stageToClose);
@@ -184,7 +189,7 @@ public class ViewFactory {
                 alerta.getDialogPane().setHeaderText("¿Desea salir?");
                 alerta.showAndWait()
                         .filter(response -> response == ButtonType.OK)
-                        .ifPresent(response -> {
+                        .ifPresent(response -> {*/
                             if (GouScriptViewController.gouScriptTask != null) {
                                 if (GouScriptViewController.gouScriptTask.isRunning()) {
                                     GouScriptViewController.gouScriptTask.cancel();
@@ -192,7 +197,7 @@ public class ViewFactory {
                             }
                             GxportDBViewController.gexportParser.cancel();
                             stageToClose.close();
-                        });
+            /*            });*/
 
             }else{
                 stageToClose.close();

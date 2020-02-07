@@ -197,23 +197,25 @@ public class GxportDBViewController implements Initializable {
     
     /**
      * Metodo para cancelar las tareas de importar base de datos
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     void onCancelTask(ActionEvent event) {
         Platform.runLater(() -> {
-                                    
-                                    gxportButton.setVisible(true);
-                                    cancelTask.setVisible(false);
-                                    progressGexportDb.setVisible(false);
-                                    progresTaskIndicator.setVisible(false);
-                                    textOpenFile.clear();
-                                    textOutputFile.clear();
-                                    //logGexportIndicator.setVisible(false);
-                                });
+
+            gxportButton.setVisible(true);
+            cancelTask.setVisible(false);
+            progressGexportDb.setVisible(false);
+            progresTaskIndicator.setVisible(false);
+            textOpenFile.clear();
+            textOutputFile.clear();
+            //logGexportIndicator.setVisible(false);
+        });
         if (ungz != null) {
-            if(ungz.isRunning())
-                    ungz.cancel();
+            if (ungz.isRunning()) {
+                ungz.cancel();
+            }
         }
         if (gexportParser != null) {
             if (gexportParser.isRunning()) {

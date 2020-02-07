@@ -97,7 +97,7 @@ public class MainController extends BaseController implements Initializable {
     void onExit(ActionEvent event) {
         
        Stage stage = (Stage)gxportDbTab.getTabPane().getScene().getWindow();
-        
+        //event.consume();
         viewFactory.closePrimaryStage(stage);  
     }
 
