@@ -6,7 +6,7 @@ GouScriptView-Interface
   Avila RAN se instala en la carpeta Users/appdata/local (No necesita de permisos de administrador).
 * Descarga Avila RAN v2 PORTABLE (avilaran-portable.zip)
 [AQUI](https://github.com/miguel2m/GouScriptView/blob/master/GouScriptView/AvilaRANv2-dist/avilaran-portable.zip)
-* Descomprimir avilaran-portable.zip: Ejecutar AvilaRan.exe ó GouScriptView.jar si el antivirus bloquea ejecución de archivos .exe
+* Descomprimir avilaran-portable.zip: Ejecutar AvilaRan.exe ó GouScriptView.jar si el antivirus bloquea ejecución de archivos .exe (Recordatorio para la ejecución de AvilaRan-portable debe estar acompañado de la carpeta lib).
 * Características: Descomprime Archivos .gz e interpreta Archivos xml (GEXPORT) además de crear GOU script según lista de NODEB.
 * PILA DE ERRORES:
 
