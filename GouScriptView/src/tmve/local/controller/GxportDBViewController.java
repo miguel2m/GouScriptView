@@ -175,10 +175,10 @@ public class GxportDBViewController implements Initializable {
             }
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR,
-                    "Por favor ingrese un direcctorio GXPORT válido ");
+                    "Por favor ingrese un direcctorio GEXPORT válido ");
             alert.initOwner(labelGxportInput.getScene().getWindow());
             alert.initModality(Modality.APPLICATION_MODAL);
-            alert.setTitle("Ingresar un directorio GXPORT válido ");
+            alert.setTitle("Ingresar un directorio GEXPORT válido ");
             alert.showAndWait();
         }
     }
