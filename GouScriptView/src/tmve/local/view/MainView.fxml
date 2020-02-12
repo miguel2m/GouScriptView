@@ -96,7 +96,7 @@
                   </GridPane>
                </content>--></Tab>
           <Tab fx:id="gouScriptTab" text="GOU SCRIPT">
-              <fx:include source="GouScriptView.fxml" />
+             <!-- <fx:include source="GouScriptView.fxml" /> -->
              <!--
             <fx:include source="GouScriptView.fxml" />
             -->

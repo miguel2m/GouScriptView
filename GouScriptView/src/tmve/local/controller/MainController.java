@@ -115,17 +115,17 @@ public class MainController extends BaseController implements Initializable {
             //viewFactory.addTab(gxportDbTab, "GxportDBView.fxml");
             
             
-            /*gouScriptTab.setOnSelectionChanged((event) -> {
+            gouScriptTab.setOnSelectionChanged((event) -> {
                 if (gouScriptTab.isSelected()) {
                     // refreshTabBData();
                     //System.out.println("gouScriptTab ");
-                    Path file = Paths.get(outputDirectory+File.separator+"ADJNODE.csv");
+                    /*Path file = Paths.get(outputDirectory+File.separator+"ADJNODE.csv");
                     Path file2 = Paths.get(outputDirectory+File.separator+"IPRT.csv");
                     if (Files.isReadable(file) && Files.isReadable(file2)) {
-                        Platform.runLater(() -> {
+                        Platform.runLater(() -> {*/
                         viewFactory.addTab(gouScriptTab, "GouScriptView.fxml");
                     
-                        });
+                    /*    });
                     }else{
                         Alert alert = new Alert(AlertType.ERROR,
                                 "La base no fue cargada completamente, "
@@ -135,11 +135,11 @@ public class MainController extends BaseController implements Initializable {
                         alert.showAndWait();
                        
                         //Optional<ButtonType> result = alert.showAndWait();
-                    }
+                    }*/
                     
                     
                 }
-            });*/
+            });
         
     }    
     
