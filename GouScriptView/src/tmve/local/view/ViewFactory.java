@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import tmve.local.controller.AuditViewController;
 import tmve.local.controller.BaseController;
 import tmve.local.controller.GouScriptViewController;
 import tmve.local.controller.GxportDBViewController;
@@ -117,9 +118,22 @@ public class ViewFactory {
         //Si no hay ningun proceso corriendo se puede cerrar la ventana
         if ((GouScriptViewController.gouScriptTask == null)
                 && (GxportDBViewController.ungz == null)
-                && (GxportDBViewController.gexportParser == null)) {
+                && (GxportDBViewController.gexportParser == null)
+                && (AuditViewController._crearAuditoria == null)) {
             stageToClose.close();
         }
+        //Si la AUDITORIA esta corriendo se pregunta si se desea cerrar
+        if (AuditViewController._crearAuditoria != null) {
+            if (AuditViewController._crearAuditoria.isRunning()) {
+                String msg = " El proceso AUDITORIA se está ejecutando...";
+                            AuditViewController._crearAuditoria.cancel();
+                            stageToClose.close();
+
+            }else{
+                stageToClose.close();
+            }
+        }
+        
         //Si gouScriptTask esta corriendo se pregunta si se desea cerrar
         if (GouScriptViewController.gouScriptTask != null) {
             if (GouScriptViewController.gouScriptTask.isRunning()) {

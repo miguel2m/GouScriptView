@@ -39,6 +39,8 @@ public class MainController extends BaseController implements Initializable {
     @FXML
     private Tab gouScriptTab;
     @FXML
+    private Tab auditTab;
+    @FXML
      Label labelFooter;
     /**
      * Constructor de la clase principal
@@ -113,6 +115,13 @@ public class MainController extends BaseController implements Initializable {
             });
             //viewFactory.addTab(gxportDbTab, "GxportDBView.fxml");
             
+            auditTab.setOnSelectionChanged((event) -> {
+                if (auditTab.isSelected()) {
+
+                        viewFactory.addTab(auditTab, "AuditView.fxml");    
+                    
+                }
+            });
             
             gouScriptTab.setOnSelectionChanged((event) -> {
                 if (gouScriptTab.isSelected()) {
